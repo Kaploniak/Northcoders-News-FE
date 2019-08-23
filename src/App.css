@@ -59,3 +59,13 @@ footer {
   padding-left: 2rem;
   padding-right: 2rem;
 }
+
+/* === ARTICLE LIST === */
+
+.articleList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+}

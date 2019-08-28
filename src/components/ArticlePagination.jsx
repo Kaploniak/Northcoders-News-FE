@@ -2,26 +2,39 @@ import React, { Component } from "react";
 import Pagination from "react-bootstrap/Pagination";
 
 class ArticlePagination extends Component {
+  state = {
+    p: 1,
+    total_count: 0,
+    limit: 10
+  };
   render() {
-    return (
-      <Pagination variant="secondary">
-        <Pagination.First />
-        <Pagination.Prev />
-        <Pagination.Item>{1}</Pagination.Item>
-        <Pagination.Ellipsis />
+    const { total_count, limit } = this.state;
+    let pagination = Math.ceil(total_count / limit);
+    let items = [];
+    for (let number = 1; number <= pagination; number++) {
+      items.push(
+        <Pagination.Item key={number} onClick={this.handleClick}>
+          {number}
+        </Pagination.Item>
+      );
+    }
 
-        <Pagination.Item>{10}</Pagination.Item>
-        <Pagination.Item>{11}</Pagination.Item>
-        <Pagination.Item active>{12}</Pagination.Item>
-        <Pagination.Item>{13}</Pagination.Item>
-        <Pagination.Item disabled>{14}</Pagination.Item>
+    return <Pagination className="pagination">{items}</Pagination>;
+  }
 
-        <Pagination.Ellipsis />
-        <Pagination.Item>{20}</Pagination.Item>
-        <Pagination.Next />
-        <Pagination.Last />
-      </Pagination>
-    );
+  handleClick = e => {
+    this.setState({ p: e.target.text });
+  };
+
+  componentDidMount() {
+    const { p, total_count } = this.props;
+    this.setState({ p, total_count });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.p !== this.state.p) {
+      this.props.updatePage(this.state.p);
+    }
   }
 }
 

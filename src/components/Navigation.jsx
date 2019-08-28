@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-// import { Link } from "@reach/router";
-import "bootstrap/dist/css/bootstrap.min.css";
 import nc from "../images/nc-white-long.png";
+import * as api from "../api";
 import {
   Navbar,
   Nav,
@@ -12,7 +11,11 @@ import {
 } from "react-bootstrap";
 
 class Navigation extends Component {
+  state = {
+    topics: []
+  };
   render() {
+    const { topics } = this.state;
     return (
       <Navbar
         className="navbar"
@@ -31,11 +34,16 @@ class Navigation extends Component {
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/articles">Articles</Nav.Link>
             <NavDropdown title="Topics" id="collasible-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+              {topics.map(topic => {
+                return (
+                  <NavDropdown.Item
+                    href={`/articles/${topic.slug}`}
+                    key={topic.slug}
+                  >
+                    {topic.slug}
+                  </NavDropdown.Item>
+                );
+              })}
               <NavDropdown.Divider />
               <NavDropdown.Item href="/topics">
                 Show all topics
@@ -51,14 +59,30 @@ class Navigation extends Component {
               />
               <Button variant="outline-secondary">Search</Button>
             </Form>
-            <Nav.Link eventKey={2} href="#memes">
-              Log in | Sign in
-            </Nav.Link>
+            {this.props.user ? (
+              <Nav.Link href={`/users/${this.props.user}`}>
+                {this.props.user}
+              </Nav.Link>
+            ) : (
+              <Nav.Link eventKey={2} href="#memes">
+                Log in | Sign in
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
     );
   }
+
+  componentDidMount() {
+    this.fetchAllTopics();
+  }
+
+  fetchAllTopics = () => {
+    api.getAllTopics().then(({ topics }) => {
+      this.setState({ topics, isLoading: false });
+    });
+  };
 }
 
 export default Navigation;

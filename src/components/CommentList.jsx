@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Loading from "../utils/Loading";
 import * as api from "../api";
-import { Dropdown, DropdownButton } from "react-bootstrap";
 import CommentCard from "../components/CommentCard";
+import CommentSort from "./CommentSort";
 
 class CommentList extends Component {
   state = {
@@ -16,53 +16,7 @@ class CommentList extends Component {
     if (isLoading) return <Loading text="Loading the comments" />;
     return (
       <div className="main-commentList">
-        <DropdownButton
-          className="dropdownSort"
-          id="dropdown-item-button"
-          title="Sort"
-          variant="secondary"
-        >
-          <Dropdown.Item
-            as="button"
-            name="sort_by"
-            value="author"
-            onClick={this.handleClick}
-          >
-            by author
-          </Dropdown.Item>
-          <Dropdown.Item
-            as="button"
-            name="sort_by"
-            value="votes"
-            onClick={this.handleClick}
-          >
-            by votes
-          </Dropdown.Item>
-          <Dropdown.Item
-            as="button"
-            name="sort_by"
-            value="created_at"
-            onClick={this.handleClick}
-          >
-            by create time
-          </Dropdown.Item>
-          <Dropdown.Item
-            as="button"
-            name="order"
-            value="asc"
-            onClick={this.handleClick}
-          >
-            ascending
-          </Dropdown.Item>
-          <Dropdown.Item
-            as="button"
-            name="order"
-            value="desc"
-            onClick={this.handleClick}
-          >
-            descending
-          </Dropdown.Item>
-        </DropdownButton>
+        <CommentSort handleClick={this.handleClick} />
         <ul className="commentList">
           {comments.map(comment => {
             return (

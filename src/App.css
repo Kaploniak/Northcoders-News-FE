@@ -100,3 +100,20 @@ body {
 .dropdownSort {
   margin: 1rem;
 }
+
+/* === ALL ARTICLE PAGE === */
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+/* === ALL TOPICS PAGE === */
+.topicsList {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  list-style: none;
+}

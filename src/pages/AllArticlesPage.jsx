@@ -1,15 +1,21 @@
 import React, { Component } from "react";
 import ArticleList from "../components/ArticleList";
-import ArticlePagination from "../components/ArticlePagination";
 
 class AllArticlesPage extends Component {
+  state = {
+    article: {},
+    isLoading: true,
+    showComments: false
+  };
+
   render() {
+    const { query } = this.props;
+    console.log(query, "<<<< query");
     return (
       <>
         <div className="allArticles">
           <h2>Articles</h2>
-          <ArticleList />
-          <ArticlePagination />
+          <ArticleList pagination="true" sort="true" topic={query} />
         </div>
       </>
     );

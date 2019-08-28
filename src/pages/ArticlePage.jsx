@@ -4,6 +4,7 @@ import Loading from "../utils/Loading";
 import * as api from "../api";
 import { dateFormat } from "../utils/utils";
 import CommentList from "../components/CommentList";
+import { Link } from "@reach/router";
 
 class ArticlePage extends Component {
   state = {
@@ -18,8 +19,12 @@ class ArticlePage extends Component {
       <Jumbotron>
         <h2>{article.title}</h2>
         <h4 className="mb-2 text-muted">{dateFormat(article.created_at)}</h4>
-        <h4 className="mb-2 text-muted">{article.author}</h4>
-        <h4 className="mb-2 text-muted">#{article.topic}</h4>
+        <Link to={`/articles?author=${article.author}`}>
+          <h4 className="mb-2 text-muted">{article.author}</h4>
+        </Link>
+        <Link to={`/articles?topic=${article.topic}`}>
+          <h4 className="mb-2 text-muted">#{article.topic}</h4>
+        </Link>
         <h5>{article.body}</h5>
         <div className="articleButton">
           <Button variant="secondary" onClick={this.handleClick}>

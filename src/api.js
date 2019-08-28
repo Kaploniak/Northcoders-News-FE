@@ -7,7 +7,7 @@ export const getAllArticles = async ({
   author,
   topic,
   limit,
-  page
+  p
 }) => {
   const { data } = await axios.get(`${baseURL}/articles`, {
     params: {
@@ -16,10 +16,9 @@ export const getAllArticles = async ({
       author,
       topic,
       limit,
-      page
+      p
     }
   });
-  console.log(data);
   return data;
 };
 
@@ -41,5 +40,12 @@ export const getAllCommentsByArticleId = async ({
       params: { sort_by, order }
     }
   );
+  return data;
+};
+
+export const getAllTopics = async () => {
+  const { data } = await axios.get(`${baseURL}/topics`, {
+    params: {}
+  });
   return data;
 };

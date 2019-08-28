@@ -4,7 +4,6 @@ import * as api from "../api";
 import Card from "react-bootstrap/Card";
 import { Link } from "@reach/router";
 import { datePrettier } from "../utils/utils";
-
 import cooking from "../images/cooking.jpg";
 import coding from "../images/coding.jpg";
 import football from "../images/football.jpg";

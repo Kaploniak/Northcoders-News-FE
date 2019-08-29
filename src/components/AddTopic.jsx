@@ -2,13 +2,17 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { Form, Card, Button } from "react-bootstrap";
 import * as api from "../api";
+import ErrorPage from "../pages/ErrorPage";
 
 class AddTopic extends Component {
   state = {
     slug: "",
-    description: ""
+    description: "",
+    err: false
   };
   render() {
+    const { err } = this.state;
+    if (err) return <ErrorPage err={err} />;
     return (
       <div className="addTopicForm">
         <Card>
@@ -65,7 +69,7 @@ class AddTopic extends Component {
         fetchAllTopics();
       })
       .catch(err => {
-        console.log(err);
+        this.setState({ err });
       });
   };
 }

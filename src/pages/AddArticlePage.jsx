@@ -4,6 +4,7 @@ import { Form, Card, Button } from "react-bootstrap";
 import * as api from "../api";
 import ErrorPage from "../pages/ErrorPage";
 import Loading from "../utils/Loading";
+import { navigate } from "@reach/router";
 
 class AddArticlePage extends Component {
   state = {
@@ -147,6 +148,7 @@ class AddArticlePage extends Component {
             body: "",
             topic: "coding"
           });
+          navigate(`/`);
         })
         .catch(err => {
           this.setState({ err, isLoading: false });
@@ -166,6 +168,7 @@ class AddArticlePage extends Component {
             body: "",
             topic: "coding"
           });
+          navigate(`/`);
         })
         .catch(err => {
           this.setState({ err, isLoading: false });

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { Form, Card, Button } from "react-bootstrap";
 import * as api from "../api";
+import ErrorPage from "../pages/ErrorPage";
+import Loading from "../utils/Loading";
 
 class AddArticlePage extends Component {
   state = {
@@ -11,11 +13,15 @@ class AddArticlePage extends Component {
     topic: "coding",
     slug: null,
     description: null,
-    addTopic: false
+    addTopic: false,
+    isLoading: true,
+    err: false
   };
   render() {
-    const { addTopic, topics } = this.state;
+    const { addTopic, topics, isLoading, err } = this.state;
 
+    if (err) return <ErrorPage err={err} />;
+    if (isLoading) return <Loading text="Loading the articles" />;
     return (
       <>
         <h2>Add new article</h2>
@@ -103,9 +109,14 @@ class AddArticlePage extends Component {
   }
 
   fetchAllTopics = () => {
-    api.getAllTopics().then(({ topics }) => {
-      this.setState({ topics, isLoading: false });
-    });
+    api
+      .getAllTopics()
+      .then(({ topics }) => {
+        this.setState({ topics, isLoading: false });
+      })
+      .catch(err => {
+        this.setState({ err, isLoading: false });
+      });
   };
 
   handleShowTopicForm = e => {
@@ -136,6 +147,9 @@ class AddArticlePage extends Component {
             body: "",
             topic: "coding"
           });
+        })
+        .catch(err => {
+          this.setState({ err, isLoading: false });
         });
     } else if (slug) {
       api
@@ -152,6 +166,9 @@ class AddArticlePage extends Component {
             body: "",
             topic: "coding"
           });
+        })
+        .catch(err => {
+          this.setState({ err, isLoading: false });
         });
     }
   };

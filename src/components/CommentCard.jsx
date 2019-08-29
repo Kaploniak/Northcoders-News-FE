@@ -1,20 +1,20 @@
 import React, { Component } from "react";
-import Loading from "../utils/Loading";
 import { dateFormat, timeFormat } from "../utils/utils";
 import { Card, Button } from "react-bootstrap";
 import Voting from "./Voting";
 import * as api from "../api";
-// to do
+import ErrorPage from "../pages/ErrorPage";
+
 class CommentCard extends Component {
   state = {
-    comment: {},
-    isLoading: true
+    err: false
   };
   render() {
-    const { comment, isLoading } = this.state;
-    const { loggedInUser } = this.props;
+    const { err } = this.state;
+    const { comment, loggedInUser } = this.props;
 
-    if (isLoading) return <Loading text="Loading comment..." />;
+    if (err) return <ErrorPage err={err} />;
+
     return (
       <Card>
         <Card.Body>
@@ -40,17 +40,17 @@ class CommentCard extends Component {
       </Card>
     );
   }
-  componentDidMount() {
-    const { comment } = this.props;
-    this.setState({ comment, isLoading: false });
-  }
 
   handleDeleteComment = () => {
     const { comment } = this.props;
-    api.deleteComment(comment.comment_id).then(() => {
-      this.props.fetchAllCommentsByArticleId();
-      console.log("succesfuly deleted comment");
-    });
+    api
+      .deleteComment(comment.comment_id)
+      .then(() => {
+        this.props.fetchAllCommentsByArticleId();
+      })
+      .catch(err => {
+        this.setState({ err, isLoading: false });
+      });
   };
 }
 

@@ -6,7 +6,7 @@ const ErrorPage = ({ text, err }) => {
       <div className="errorPage">
         <h1>{text || "Something went wrong..."}</h1>
         {!!err && <p>{err.message}</p>}
-        <img src={error} alt={"error"} />
+        <img className="errorPic" src={error} alt={"error"} />
       </div>
     );
   } else if (err.response.status === 404) {

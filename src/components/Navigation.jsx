@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import nc from "../images/nc-white-long.png";
 import * as api from "../api";
+import { Link } from "@reach/router";
 import {
   Navbar,
   Nav,
@@ -32,14 +33,20 @@ class Navigation extends Component {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/articles">Articles</Nav.Link>
-            <Nav.Link href="/users">Users</Nav.Link>
+            <Link className="nav-link" to="/">
+              Home
+            </Link>
+            <Link className="nav-link" to="/articles">
+              Articles
+            </Link>
+            <Link className="nav-link" to="/users">
+              Users
+            </Link>
             <NavDropdown title="Topics" id="collasible-nav-dropdown">
               {topics.map(topic => {
                 return (
                   <NavDropdown.Item
-                    href={`/articles/${topic.slug}/topics`}
+                    to={`/articles/${topic.slug}/topics`}
                     key={topic.slug}
                   >
                     {topic.slug}
@@ -47,11 +54,11 @@ class Navigation extends Component {
                 );
               })}
               <NavDropdown.Divider />
-              <NavDropdown.Item href="/topics">
-                Show all topics
-              </NavDropdown.Item>
+              <NavDropdown.Item to="/topics">Show all topics</NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link href="/article/form">Add Article</Nav.Link>
+            <Link className="nav-link" to="/article/form">
+              Add Article
+            </Link>
           </Nav>
           <Nav>
             <Form inline>
@@ -63,13 +70,13 @@ class Navigation extends Component {
               <Button variant="outline-secondary">Search</Button>
             </Form>
             {loggedInUser ? (
-              <Nav.Link href={`/users/${loggedInUser}`}>
+              <Link className="nav-link" to={`/users/${loggedInUser}`}>
                 {loggedInUser}
-              </Nav.Link>
+              </Link>
             ) : (
-              <Nav.Link eventKey={2} href="#memes">
+              <Link className="nav-link" eventKey={2} to="#memes">
                 Log in | Sign in
-              </Nav.Link>
+              </Link>
             )}
           </Nav>
         </Navbar.Collapse>

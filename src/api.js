@@ -44,8 +44,27 @@ export const getAllCommentsByArticleId = async ({
 };
 
 export const getAllTopics = async () => {
-  const { data } = await axios.get(`${baseURL}/topics`, {
-    params: {}
-  });
+  const { data } = await axios.get(`${baseURL}/topics`);
   return data;
+};
+
+export const patchVotes = ({ likeDifference, article_id, comment_id }) => {
+  if (article_id) {
+    return axios.patch(`${baseURL}/articles/${article_id}`, {
+      inc_votes: likeDifference
+    });
+  } else if (comment_id) {
+    return axios.patch(`${baseURL}/comments/${comment_id}`, {
+      inc_votes: likeDifference
+    });
+  }
+};
+
+export const getAllUsers = async () => {
+  const { data } = await axios.get(`${baseURL}/users`);
+  return data;
+};
+
+export const postNewTopic = async ({ slug, description }) => {
+  await axios.post(`${baseURL}/topics`, { slug, description });
 };

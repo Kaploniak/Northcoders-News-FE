@@ -29,7 +29,11 @@ class ArticlePage extends Component {
       <Jumbotron>
         {loggedInUser && loggedInUser === article.author && (
           <div className="articleButton">
-            <Button variant="danger">Delete article</Button>
+            <Link to="/">
+              <Button variant="danger" onClick={this.handleDeleteArticle}>
+                Delete article
+              </Button>
+            </Link>
           </div>
         )}
         <Link to={`/articles?${article.topic}`}>
@@ -50,21 +54,21 @@ class ArticlePage extends Component {
           </div>
         )}
         <div className="articleButton">
-          <Button variant="secondary" onClick={this.handleClick}>
+          <Button
+            variant="secondary"
+            value="showComments"
+            onClick={this.handleShowComments}
+          >
             {showComments ? "Hide comments" : "Show comments"}
           </Button>
           {showComments && (
             <CommentList
               article_id={article.article_id}
+              author={article.author}
               loggedInUser={loggedInUser}
             />
           )}
         </div>
-        {loggedInUser && (
-          <div className="articleButton">
-            <Button variant="secondary">Add comment</Button>
-          </div>
-        )}
       </Jumbotron>
     );
   }
@@ -79,9 +83,16 @@ class ArticlePage extends Component {
     });
   };
 
-  handleClick = () => {
+  handleShowComments = () => {
     this.setState(currentState => {
       return { showComments: !currentState.showComments };
+    });
+  };
+
+  handleDeleteArticle = () => {
+    const { article_id } = this.props;
+    api.deleteArticle(article_id).then(() => {
+      console.log("succesfully deleted article");
     });
   };
 }

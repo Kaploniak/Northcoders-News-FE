@@ -6,14 +6,17 @@ import { Link } from "@reach/router";
 import cooking from "../images/cooking.jpg";
 import coding from "../images/coding.jpg";
 import football from "../images/football.jpg";
+import AddTopic from "../components/AddTopic";
 
 class AllTopicsPage extends Component {
   state = {
     topics: [],
-    isLoading: true
+    isLoading: true,
+    addTopic: false
   };
   render() {
-    const { topics, isLoading } = this.state;
+    const { topics, isLoading, addTopic } = this.state;
+    const { loggedInUser } = this.props;
     const ref = {
       coding,
       cooking,
@@ -25,29 +28,34 @@ class AllTopicsPage extends Component {
         <div className="topicsList">
           {topics.map(topic => {
             return (
-              <Card
-                style={{ width: "18rem" }}
-                className="card"
-                key={topic.slug}
-              >
-                <Card.Body>
-                  <Link to={`/articles/${topic.slug}`}>
+              <Link to={`/articles/${topic.slug}/topics`} key={topic.slug}>
+                <Card style={{ width: "18rem" }} className="card">
+                  <Card.Body>
                     <Card.Img
                       variant="top"
                       src={ref[topic.slug]}
                       alt={`Card image: ${topic.slug} topic`}
                     />
-                  </Link>
-                  <Card.Title>#{topic.slug}</Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">
-                    {topic.description}
-                  </Card.Subtitle>
-                </Card.Body>
-              </Card>
+                    <Card.Title>#{topic.slug}</Card.Title>
+                    <Card.Subtitle className="mb-2 text-muted">
+                      {topic.description}
+                    </Card.Subtitle>
+                  </Card.Body>
+                </Card>
+              </Link>
             );
           })}
         </div>
-        <Button variant="secondary">Add topic</Button>
+        {loggedInUser && (
+          <Button
+            className="addTopicButton"
+            variant="secondary"
+            onClick={this.handleClick}
+          >
+            {addTopic ? "Close" : "Add topic"}
+          </Button>
+        )}
+        {addTopic ? <AddTopic fetchAllTopics={this.fetchAllTopics} /> : null}
       </>
     );
   }
@@ -59,6 +67,12 @@ class AllTopicsPage extends Component {
   fetchAllTopics = () => {
     api.getAllTopics().then(({ topics }) => {
       this.setState({ topics, isLoading: false });
+    });
+  };
+
+  handleClick = () => {
+    this.setState(currentState => {
+      return { addTopic: !currentState.addTopic };
     });
   };
 }

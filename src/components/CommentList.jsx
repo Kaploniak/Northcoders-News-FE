@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import CommentCard from "../components/CommentCard";
 import CommentSort from "./CommentSort";
 import AddComment from "./AddComment";
+import ErrorPage from "../pages/ErrorPage";
 
 class CommentList extends Component {
   state = {
@@ -12,12 +13,14 @@ class CommentList extends Component {
     sort_by: null,
     order: null,
     showAddCommentForm: false,
-    isLoading: true
+    isLoading: true,
+    err: false
   };
   render() {
-    const { comments, isLoading, showAddCommentForm } = this.state;
+    const { comments, isLoading, showAddCommentForm, err } = this.state;
     const { loggedInUser, article_id, author } = this.props;
 
+    if (err) return <ErrorPage err={err} />;
     if (isLoading) return <Loading text="Loading the comments" />;
     return (
       <div className="main-commentList">
@@ -44,6 +47,7 @@ class CommentList extends Component {
         )}
         {showAddCommentForm && (
           <AddComment
+            loggedInUser={loggedInUser}
             article_id={article_id}
             username={author}
             fetchAllCommentsByArticleId={this.fetchAllCommentsByArticleId}
@@ -75,6 +79,9 @@ class CommentList extends Component {
       .getAllCommentsByArticleId({ article_id, sort_by, order })
       .then(({ comments }) => {
         this.setState({ comments, isLoading: false });
+      })
+      .catch(err => {
+        this.setState({ err, isLoading: false });
       });
   };
 

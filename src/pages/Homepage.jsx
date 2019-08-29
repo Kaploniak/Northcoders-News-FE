@@ -6,11 +6,11 @@ const Homepage = () => {
     <>
       <div className="newArticles">
         <h2>Fresh Articles</h2>
-        <ArticleList sort_by="created_at" limit="4" />
+        <ArticleList limit="4" />
       </div>
       <div className="bestArticles">
         <h2>Top Articles</h2>
-        <ArticleList sort_by="votes" limit="4" />
+        <ArticleList sort="votes" limit="4" />
       </div>
     </>
   );

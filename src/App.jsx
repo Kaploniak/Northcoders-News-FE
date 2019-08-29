@@ -5,31 +5,45 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from "./components/Navigation";
 import Header from "./components/Header";
 import Homepage from "./pages/Homepage";
-import Footer from "./components/Footer";
+// import Footer from "./components/Footer";
 import AllTopicsPage from "./pages/AllTopicsPage";
 import ArticlePage from "./pages/ArticlePage";
 import AllArticlesPage from "./pages/AllArticlesPage";
+import AllUsersPage from "./pages/AllUsersPage";
+import AddArticlePage from "./pages/AddArticlePage";
 
 class App extends React.Component {
   state = {
-    user: "jessjelly"
-    // user: null
+    loggedInUser: "jessjelly"
+    // loggedInUser: null
   };
   render() {
-    const { user } = this.state;
+    const { loggedInUser } = this.state;
     return (
       <div className="App">
-        <Navigation user={user} />
+        <Navigation loggedInUser={loggedInUser} />
         <Header />
         <Router>
           <Homepage path="/" />
-          <AllArticlesPage path="/articles/:query" />
-          <AllArticlesPage path="/articles" />
-          <ArticlePage path="/articles/:article_id" />
-          <AllTopicsPage path="/topics" />
+          <AllArticlesPage
+            path="/articles/:topic/topics"
+            loggedInUser={loggedInUser}
+          />
+          <AllArticlesPage
+            path="/articles/:author/authors"
+            loggedInUser={loggedInUser}
+          />
+          <AllArticlesPage path="/articles" loggedInUser={loggedInUser} />
+          <ArticlePage
+            path="/article/:article_id"
+            loggedInUser={loggedInUser}
+          />
+          <AllTopicsPage path="/topics" loggedInUser={loggedInUser} />
+          <AllUsersPage path="/users" />
+          <AddArticlePage path="article/form" />
           <Homepage default />
         </Router>
-        <Footer />
+        {/* <Footer /> */}
       </div>
     );
   }

@@ -183,5 +183,9 @@ body {
 }
 
 .errorPic {
-  height: rem;
+  height: 10rem;
+}
+
+.N {
+  color: red;
 }

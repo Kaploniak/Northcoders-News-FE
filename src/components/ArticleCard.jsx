@@ -7,19 +7,22 @@ import { datePrettier } from "../utils/utils";
 import cooking from "../images/cooking.jpg";
 import coding from "../images/coding.jpg";
 import football from "../images/football.jpg";
+import ErrorPage from "../pages/ErrorPage";
 
 class ArticleCard extends Component {
   state = {
     article: {},
-    isLoading: true
+    isLoading: true,
+    err: false
   };
   render() {
-    const { article, isLoading } = this.state;
+    const { article, isLoading, err } = this.state;
     const ref = {
       coding,
       cooking,
       football
     };
+    if (err) return <ErrorPage err={err} />;
     if (isLoading) return <Loading text="Loading the article..." />;
     return (
       <Card style={{ width: "18rem" }} className="card">
@@ -53,9 +56,9 @@ class ArticleCard extends Component {
           <Card.Subtitle className="mb-2 text-muted">
             Likes: {article.votes}
           </Card.Subtitle>
-          <Card.Link href={`/article/${article.article_id}`}>
+          <Link className="card-link" to={`/article/${article.article_id}`}>
             Read more
-          </Card.Link>
+          </Link>
         </Card.Body>
       </Card>
     );
@@ -69,9 +72,14 @@ class ArticleCard extends Component {
     const {
       article: { article_id }
     } = this.props;
-    api.getArticleById(article_id).then(({ article }) => {
-      this.setState({ article, isLoading: false, type: article.type });
-    });
+    api
+      .getArticleById(article_id)
+      .then(({ article }) => {
+        this.setState({ article, isLoading: false, type: article.type });
+      })
+      .catch(err => {
+        this.setState({ err, isLoading: false });
+      });
   };
 }
 

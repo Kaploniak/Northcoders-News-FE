@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import Loading from "../utils/Loading";
 import { dateFormat, timeFormat } from "../utils/utils";
 import Card from "react-bootstrap/Card";
-
+import Voting from "./Voting";
+// to do
 class CommentCard extends Component {
   state = {
     comment: {},
@@ -10,6 +11,7 @@ class CommentCard extends Component {
   };
   render() {
     const { comment, isLoading } = this.state;
+    const { loggedInUser } = this.props;
     if (isLoading) return <Loading text="Loading comment..." />;
     return (
       <Card>
@@ -22,7 +24,9 @@ class CommentCard extends Component {
             {timeFormat(comment.created_at)}
           </Card.Subtitle>
           <Card.Text>{comment.body}</Card.Text>
-          <Card.Link href="#">Vote {comment.votes}</Card.Link>
+          {loggedInUser && (
+            <Voting votes={comment.votes} comment_id={comment.comment_id} />
+          )}
         </Card.Body>
       </Card>
     );

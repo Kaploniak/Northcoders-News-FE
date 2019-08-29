@@ -16,6 +16,7 @@ class Navigation extends Component {
   };
   render() {
     const { topics } = this.state;
+    const { loggedInUser } = this.props;
     return (
       <Navbar
         className="navbar"
@@ -33,11 +34,12 @@ class Navigation extends Component {
           <Nav className="mr-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/articles">Articles</Nav.Link>
+            <Nav.Link href="/users">Users</Nav.Link>
             <NavDropdown title="Topics" id="collasible-nav-dropdown">
               {topics.map(topic => {
                 return (
                   <NavDropdown.Item
-                    href={`/articles/${topic.slug}`}
+                    href={`/articles/${topic.slug}/topics`}
                     key={topic.slug}
                   >
                     {topic.slug}
@@ -49,6 +51,7 @@ class Navigation extends Component {
                 Show all topics
               </NavDropdown.Item>
             </NavDropdown>
+            <Nav.Link href="/article/form">Add Article</Nav.Link>
           </Nav>
           <Nav>
             <Form inline>
@@ -59,9 +62,9 @@ class Navigation extends Component {
               />
               <Button variant="outline-secondary">Search</Button>
             </Form>
-            {this.props.user ? (
-              <Nav.Link href={`/users/${this.props.user}`}>
-                {this.props.user}
+            {loggedInUser ? (
+              <Nav.Link href={`/users/${loggedInUser}`}>
+                {loggedInUser}
               </Nav.Link>
             ) : (
               <Nav.Link eventKey={2} href="#memes">

@@ -74,7 +74,6 @@ class ArticleList extends Component {
       prevProps.author !== author ||
       prevProps.topic !== topic
     ) {
-      console.log("fetching...");
       this.fetchAllArticles();
     }
   }

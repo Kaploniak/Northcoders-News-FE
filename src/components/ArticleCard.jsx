@@ -24,7 +24,7 @@ class ArticleCard extends Component {
     return (
       <Card style={{ width: "18rem" }} className="card">
         <Card.Body>
-          <Link to={`/articles?topic=${article.topic}`}>
+          <Link to={`/articles/${article.topic}/topics`}>
             <Card.Img
               variant="top"
               src={ref[article.topic]}
@@ -35,12 +35,12 @@ class ArticleCard extends Component {
           <Card.Subtitle className="mb-2 text-muted">
             {datePrettier(article.created_at)}
           </Card.Subtitle>
-          <Link to={`/articles?author=${article.author}`}>
+          <Link to={`/articles/${article.author}/authors`}>
             <Card.Subtitle className="mb-2 text-muted">
               {article.author}
             </Card.Subtitle>
           </Link>
-          <Link to={`/articles?topic=${article.topic}`}>
+          <Link to={`/articles/${article.topic}/topics`}>
             <Card.Subtitle className="mb-2 text-muted">
               #{article.topic}
             </Card.Subtitle>
@@ -50,7 +50,10 @@ class ArticleCard extends Component {
               ? article.body.slice(0, 100) + " ..."
               : article.body}
           </Card.Text>
-          <Card.Link href={`/articles/${article.article_id}`}>
+          <Card.Subtitle className="mb-2 text-muted">
+            Likes: {article.votes}
+          </Card.Subtitle>
+          <Card.Link href={`/article/${article.article_id}`}>
             Read more
           </Card.Link>
         </Card.Body>

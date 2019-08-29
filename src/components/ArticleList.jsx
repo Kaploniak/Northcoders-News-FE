@@ -19,15 +19,8 @@ class ArticleList extends Component {
     order: null
   };
   render() {
-    const {
-      articles,
-      isLoading,
-      err,
-      pagination,
-      total_count,
-      p,
-      sort
-    } = this.state;
+    const { articles, isLoading, err, total_count, p } = this.state;
+    const { pagination, sort } = this.props;
     if (err) return <ErrorPage err={err} />;
     if (isLoading) return <Loading text="Loading the articles" />;
     return (
@@ -67,9 +60,7 @@ class ArticleList extends Component {
   };
 
   componentDidMount() {
-    const { pagination, sort } = this.props;
     this.fetchAllArticles();
-    this.setState({ pagination, sort });
   }
 
   componentDidUpdate(prevProps, prevState) {

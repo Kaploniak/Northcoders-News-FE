@@ -40,7 +40,8 @@ class App extends React.Component {
           />
           <AllTopicsPage path="/topics" loggedInUser={loggedInUser} />
           <AllUsersPage path="/users" />
-          <AddArticlePage path="article/form" />
+          <AddArticlePage path="article/form" loggedInUser={loggedInUser} />
+
           <Homepage default />
         </Router>
         {/* <Footer /> */}

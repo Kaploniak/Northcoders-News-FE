@@ -9,7 +9,7 @@ const AllArticlesPage = props => {
         <h2>Articles</h2>
         <ArticleList
           pagination="true"
-          sort="true"
+          sortOption="true"
           topic={topic}
           author={author}
         />

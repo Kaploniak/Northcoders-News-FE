@@ -8,7 +8,8 @@ class ArticlePagination extends Component {
     limit: 10
   };
   render() {
-    const { total_count, limit } = this.state;
+    const { limit } = this.state;
+    const { total_count } = this.props;
     let pagination = Math.ceil(total_count / limit);
     let items = [];
     for (let number = 1; number <= pagination; number++) {
@@ -25,11 +26,6 @@ class ArticlePagination extends Component {
   handleClick = e => {
     this.setState({ p: e.target.text });
   };
-
-  componentDidMount() {
-    const { p, total_count } = this.props;
-    this.setState({ p, total_count });
-  }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.p !== this.state.p) {

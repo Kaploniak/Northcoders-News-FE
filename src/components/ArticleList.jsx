@@ -14,13 +14,13 @@ class ArticleList extends Component {
     isLoading: true,
     err: false,
     pagination: null,
-    sort: null,
+    sortOption: null,
     sort_by: null,
     order: null
   };
   render() {
     const { articles, isLoading, err, total_count, p } = this.state;
-    const { pagination, sort } = this.props;
+    const { pagination, sortOption } = this.props;
     if (err) return <ErrorPage err={err} />;
     if (isLoading) return <Loading text="Loading the articles" />;
     return (
@@ -32,7 +32,7 @@ class ArticleList extends Component {
             updatePage={this.updatePage}
           />
         )}
-        {sort && (
+        {sortOption && (
           <ArticleSort className="articleSort" handleClick={this.handleClick} />
         )}
         <ul className="articleList">
@@ -79,8 +79,11 @@ class ArticleList extends Component {
   }
 
   fetchAllArticles = () => {
-    const { limit, topic, author } = this.props;
-    const { p, sort_by, order } = this.state;
+    const { limit, topic, author, sort } = this.props;
+    let { p, sort_by, order } = this.state;
+    if (sort) {
+      sort_by = sort;
+    }
     api
       .getAllArticles({ sort_by, order, limit, p, topic, author })
       .then(({ articles, total_count }) => {

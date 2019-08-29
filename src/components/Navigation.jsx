@@ -27,9 +27,11 @@ class Navigation extends Component {
         variant="dark"
         fixed="top"
       >
-        <Navbar.Brand href="/">
-          <img className="brandImg" src={nc} alt="northcoders logo." />
-        </Navbar.Brand>
+        <Link to="/">
+          <Navbar.Brand>
+            <img className="brandImg" src={nc} alt="northcoders logo." />
+          </Navbar.Brand>
+        </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
@@ -45,16 +47,19 @@ class Navigation extends Component {
             <NavDropdown title="Topics" id="collasible-nav-dropdown">
               {topics.map(topic => {
                 return (
-                  <NavDropdown.Item
+                  <Link
+                    className="dropdown-item"
                     to={`/articles/${topic.slug}/topics`}
                     key={topic.slug}
                   >
                     {topic.slug}
-                  </NavDropdown.Item>
+                  </Link>
                 );
               })}
               <NavDropdown.Divider />
-              <NavDropdown.Item to="/topics">Show all topics</NavDropdown.Item>
+              <Link className="dropdown-item" to="/topics">
+                Show all topics
+              </Link>
             </NavDropdown>
             <Link className="nav-link" to="/article/form">
               Add Article

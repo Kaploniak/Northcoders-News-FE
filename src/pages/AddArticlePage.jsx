@@ -8,21 +8,14 @@ class AddArticlePage extends Component {
     topics: [],
     title: "",
     body: "",
-    topic: null,
+    topic: "coding",
     slug: null,
     description: null,
     addTopic: false
   };
   render() {
-    const {
-      title,
-      body,
-      topic,
-      slug,
-      description,
-      addTopic,
-      topics
-    } = this.state;
+    const { addTopic, topics } = this.state;
+
     return (
       <>
         <h2>Add new article</h2>
@@ -45,7 +38,11 @@ class AddArticlePage extends Component {
                 </Form.Group>
                 <Form.Group controlId="topic">
                   <Form.Label>Topic</Form.Label>
-                  <Form.Control as="select" onChange={this.handleChange}>
+                  <Form.Control
+                    as="select"
+                    onChange={this.handleChange}
+                    disabled={addTopic}
+                  >
                     {topics.map(topic => {
                       return <option key={topic.slug}>{topic.slug}</option>;
                     })}
@@ -113,7 +110,11 @@ class AddArticlePage extends Component {
 
   handleShowTopicForm = e => {
     this.setState(currentState => {
-      return { addTopic: !currentState.addTopic };
+      return {
+        addTopic: !currentState.addTopic,
+        slug: null,
+        description: null
+      };
     });
   };
 
@@ -123,18 +124,36 @@ class AddArticlePage extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { slug, description } = this.state;
-    const { fetchAllTopics } = this.props;
-    api
-      .postNewTopic({ slug, description })
-      .then(() => {
-        ReactDOM.findDOMNode(this.messageForm).reset();
-        this.setState({ slug: "", description: "" });
-        fetchAllTopics();
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    const { title, body, topic, slug, description } = this.state;
+    const { loggedInUser } = this.props;
+    if (!slug) {
+      api
+        .postNewArticle({ title, body, topic, author: loggedInUser })
+        .then(() => {
+          ReactDOM.findDOMNode(this.messageForm).reset();
+          this.setState({
+            title: "",
+            body: "",
+            topic: "coding"
+          });
+        });
+    } else if (slug) {
+      api
+        .postNewTopic({ slug, description })
+        .then(() => {
+          api.postNewArticle({ title, body, slug, author: loggedInUser });
+        })
+        .then(() => {
+          ReactDOM.findDOMNode(this.messageForm).reset();
+          this.setState({
+            slug: "",
+            description: "",
+            title: "",
+            body: "",
+            topic: "coding"
+          });
+        });
+    }
   };
 }
 

@@ -13,6 +13,7 @@ class CommentList extends Component {
   };
   render() {
     const { comments, isLoading } = this.state;
+    const { loggedInUser } = this.props;
     if (isLoading) return <Loading text="Loading the comments" />;
     return (
       <div className="main-commentList">
@@ -21,7 +22,7 @@ class CommentList extends Component {
           {comments.map(comment => {
             return (
               <li key={comment.comment_id}>
-                <CommentCard comment={comment} />
+                <CommentCard comment={comment} loggedInUser={loggedInUser} />
               </li>
             );
           })}

@@ -3,14 +3,17 @@ import Loading from "../utils/Loading";
 import * as api from "../api";
 import Card from "react-bootstrap/Card";
 import { Link } from "@reach/router";
+import ErrorPage from "../pages/ErrorPage";
 
 class AllUsersPage extends Component {
   state = {
     users: [],
-    isLoading: true
+    isLoading: true,
+    err: false
   };
   render() {
-    const { users, isLoading } = this.state;
+    const { users, isLoading, err } = this.state;
+    if (err) return <ErrorPage err={err} />;
     if (isLoading) return <Loading text="Loading the article..." />;
     return (
       <>
@@ -48,9 +51,14 @@ class AllUsersPage extends Component {
   }
 
   fetchAllUsers = () => {
-    api.getAllUsers().then(({ users }) => {
-      this.setState({ users, isLoading: false });
-    });
+    api
+      .getAllUsers()
+      .then(({ users }) => {
+        this.setState({ users, isLoading: false });
+      })
+      .catch(err => {
+        this.setState({ err, isLoading: false });
+      });
   };
 }
 

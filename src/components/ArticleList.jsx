@@ -4,6 +4,7 @@ import * as api from "../api";
 import ArticleCard from "./ArticleCard";
 import ArticlePagination from "./ArticlePagination";
 import ArticleSort from "./ArticleSort";
+import ErrorPage from "../pages/ErrorPage";
 
 class ArticleList extends Component {
   state = {
@@ -11,6 +12,7 @@ class ArticleList extends Component {
     p: 1,
     total_count: 0,
     isLoading: true,
+    err: false,
     pagination: null,
     sort: null,
     sort_by: null,
@@ -20,11 +22,13 @@ class ArticleList extends Component {
     const {
       articles,
       isLoading,
+      err,
       pagination,
       total_count,
       p,
       sort
     } = this.state;
+    if (err) return <ErrorPage err={err} />;
     if (isLoading) return <Loading text="Loading the articles" />;
     return (
       <>
@@ -90,6 +94,9 @@ class ArticleList extends Component {
       .getAllArticles({ sort_by, order, limit, p, topic, author })
       .then(({ articles, total_count }) => {
         this.setState({ articles, total_count, isLoading: false });
+      })
+      .catch(err => {
+        this.setState({ err, isLoading: false });
       });
   };
 

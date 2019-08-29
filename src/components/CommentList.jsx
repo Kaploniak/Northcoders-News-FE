@@ -1,19 +1,23 @@
 import React, { Component } from "react";
 import Loading from "../utils/Loading";
 import * as api from "../api";
+import Button from "react-bootstrap/Button";
 import CommentCard from "../components/CommentCard";
 import CommentSort from "./CommentSort";
+import AddComment from "./AddComment";
 
 class CommentList extends Component {
   state = {
     comments: [],
     sort_by: null,
     order: null,
+    showAddCommentForm: false,
     isLoading: true
   };
   render() {
-    const { comments, isLoading } = this.state;
-    const { loggedInUser } = this.props;
+    const { comments, isLoading, showAddCommentForm } = this.state;
+    const { loggedInUser, article_id, author } = this.props;
+
     if (isLoading) return <Loading text="Loading the comments" />;
     return (
       <div className="main-commentList">
@@ -22,11 +26,29 @@ class CommentList extends Component {
           {comments.map(comment => {
             return (
               <li key={comment.comment_id}>
-                <CommentCard comment={comment} loggedInUser={loggedInUser} />
+                <CommentCard
+                  comment={comment}
+                  loggedInUser={loggedInUser}
+                  fetchAllCommentsByArticleId={this.fetchAllCommentsByArticleId}
+                />
               </li>
             );
           })}
         </ul>
+        {loggedInUser && (
+          <div className="articleButton">
+            <Button variant="secondary" onClick={this.handleShowAddCommentForm}>
+              Add comment
+            </Button>
+          </div>
+        )}
+        {showAddCommentForm && (
+          <AddComment
+            article_id={article_id}
+            username={author}
+            fetchAllCommentsByArticleId={this.fetchAllCommentsByArticleId}
+          />
+        )}
       </div>
     );
   }
@@ -54,6 +76,12 @@ class CommentList extends Component {
       .then(({ comments }) => {
         this.setState({ comments, isLoading: false });
       });
+  };
+
+  handleShowAddCommentForm = () => {
+    this.setState(currentState => {
+      return { showAddCommentForm: !currentState.showAddCommentForm };
+    });
   };
 }
 

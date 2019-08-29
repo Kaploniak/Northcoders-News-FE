@@ -68,3 +68,22 @@ export const getAllUsers = async () => {
 export const postNewTopic = async ({ slug, description }) => {
   await axios.post(`${baseURL}/topics`, { slug, description });
 };
+
+export const postNewArticle = async ({ title, body, topic, author }) => {
+  await axios.post(`${baseURL}/articles`, { title, body, topic, author });
+};
+
+export const postNewComment = async (article_id, { body, username }) => {
+  await axios.post(`${baseURL}/articles/${article_id}/comments`, {
+    body,
+    username
+  });
+};
+
+export const deleteArticle = async article_id => {
+  await axios.delete(`${baseURL}/articles/${article_id}`);
+};
+
+export const deleteComment = async comment_id => {
+  await axios.delete(`${baseURL}/comments/${comment_id}`);
+};

@@ -9,21 +9,24 @@ import cooking from "../images/cooking.jpg";
 import coding from "../images/coding.jpg";
 import football from "../images/football.jpg";
 import Voting from "../components/Voting";
+import ErrorPage from "../pages/ErrorPage";
 
 class ArticlePage extends Component {
   state = {
     article: {},
     isLoading: true,
+    err: false,
     showComments: false
   };
   render() {
-    const { article, isLoading, showComments } = this.state;
+    const { article, isLoading, showComments, err } = this.state;
     const { loggedInUser } = this.props;
     const ref = {
       coding,
       cooking,
       football
     };
+    if (err) return <ErrorPage err={err} />;
     if (isLoading) return <Loading text="Loading the articles" />;
     return (
       <Jumbotron>
@@ -78,9 +81,14 @@ class ArticlePage extends Component {
 
   fetchArticleById = () => {
     const { article_id } = this.props;
-    api.getArticleById(article_id).then(({ article }) => {
-      this.setState({ article, isLoading: false });
-    });
+    api
+      .getArticleById(article_id)
+      .then(({ article }) => {
+        this.setState({ article, isLoading: false });
+      })
+      .catch(err => {
+        this.setState({ err, isLoading: false });
+      });
   };
 
   handleShowComments = () => {
@@ -91,9 +99,12 @@ class ArticlePage extends Component {
 
   handleDeleteArticle = () => {
     const { article_id } = this.props;
-    api.deleteArticle(article_id).then(() => {
-      console.log("succesfully deleted article");
-    });
+    api
+      .deleteArticle(article_id)
+      .then(() => {})
+      .catch(err => {
+        this.setState({ err, isLoading: false });
+      });
   };
 }
 

@@ -14,8 +14,6 @@ class ArticleList extends Component {
     pagination: null,
     sort: null,
     sort_by: null,
-    topic: null,
-    author: null,
     order: null
   };
   render() {
@@ -65,20 +63,21 @@ class ArticleList extends Component {
   };
 
   componentDidMount() {
-    const { pagination, sort, topic, author } = this.props;
+    const { pagination, sort } = this.props;
     this.fetchAllArticles();
-    this.setState({ pagination, sort, topic, author });
+    this.setState({ pagination, sort });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { p, sort_by, order, topic, author } = this.state;
+    const { p, sort_by, order } = this.state;
+    const { author, topic } = this.props;
 
     if (
       prevState.p !== p ||
       prevState.sort_by !== sort_by ||
       prevState.order !== order ||
-      prevState.author !== author ||
-      prevState.topic !== topic
+      prevProps.author !== author ||
+      prevProps.topic !== topic
     ) {
       this.fetchAllArticles();
     }

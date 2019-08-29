@@ -56,6 +56,9 @@ class ArticleCard extends Component {
           <Card.Subtitle className="mb-2 text-muted">
             Likes: {article.votes}
           </Card.Subtitle>
+          <Card.Subtitle className="mb-2 text-muted">
+            Comments: {article.comment_count}
+          </Card.Subtitle>
           <Link className="card-link" to={`/article/${article.article_id}`}>
             Read more
           </Link>

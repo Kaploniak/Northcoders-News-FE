@@ -64,7 +64,7 @@ class ArticleList extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { p, sort_by, order } = this.state;
+    const { p, sort_by, order, articles } = this.state;
     const { author, topic } = this.props;
 
     if (
@@ -72,7 +72,8 @@ class ArticleList extends Component {
       prevState.sort_by !== sort_by ||
       prevState.order !== order ||
       prevProps.author !== author ||
-      prevProps.topic !== topic
+      prevProps.topic !== topic ||
+      prevState.articles !== articles
     ) {
       this.fetchAllArticles();
     }

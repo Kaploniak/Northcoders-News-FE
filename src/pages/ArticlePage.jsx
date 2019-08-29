@@ -4,7 +4,7 @@ import Loading from "../utils/Loading";
 import * as api from "../api";
 import { dateFormat } from "../utils/utils";
 import CommentList from "../components/CommentList";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import cooking from "../images/cooking.jpg";
 import coding from "../images/coding.jpg";
 import football from "../images/football.jpg";
@@ -32,11 +32,9 @@ class ArticlePage extends Component {
       <Jumbotron>
         {loggedInUser && loggedInUser === article.author && (
           <div className="articleButton">
-            <Link to="/">
-              <Button variant="danger" onClick={this.handleDeleteArticle}>
-                Delete article
-              </Button>
-            </Link>
+            <Button variant="danger" onClick={this.handleDeleteArticle}>
+              Delete article
+            </Button>
           </div>
         )}
         <Link to={`/articles?${article.topic}`}>
@@ -101,7 +99,9 @@ class ArticlePage extends Component {
     const { article_id } = this.props;
     api
       .deleteArticle(article_id)
-      .then(() => {})
+      .then(() => {
+        navigate("/");
+      })
       .catch(err => {
         this.setState({ err, isLoading: false });
       });

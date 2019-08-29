@@ -181,3 +181,7 @@ body {
   margin: 0;
   padding-top: 0.3rem;
 }
+
+.errorPic {
+  height: rem;
+}

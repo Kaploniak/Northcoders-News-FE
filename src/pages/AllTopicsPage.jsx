@@ -7,21 +7,24 @@ import cooking from "../images/cooking.jpg";
 import coding from "../images/coding.jpg";
 import football from "../images/football.jpg";
 import AddTopic from "../components/AddTopic";
+import ErrorPage from "../pages/ErrorPage";
 
 class AllTopicsPage extends Component {
   state = {
     topics: [],
     isLoading: true,
+    err: false,
     addTopic: false
   };
   render() {
-    const { topics, isLoading, addTopic } = this.state;
+    const { topics, isLoading, addTopic, err } = this.state;
     const { loggedInUser } = this.props;
     const ref = {
       coding,
       cooking,
       football
     };
+    if (err) return <ErrorPage err={err} />;
     if (isLoading) return <Loading text="Loading the article..." />;
     return (
       <>
@@ -65,9 +68,14 @@ class AllTopicsPage extends Component {
   }
 
   fetchAllTopics = () => {
-    api.getAllTopics().then(({ topics }) => {
-      this.setState({ topics, isLoading: false });
-    });
+    api
+      .getAllTopics()
+      .then(({ topics }) => {
+        this.setState({ topics, isLoading: false });
+      })
+      .catch(err => {
+        this.setState({ err, isLoading: false });
+      });
   };
 
   handleClick = () => {

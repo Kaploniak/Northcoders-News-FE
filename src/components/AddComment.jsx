@@ -2,12 +2,16 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { Form, Card, Button } from "react-bootstrap";
 import * as api from "../api";
+import ErrorPage from "../pages/ErrorPage";
 
 class AddComment extends Component {
   state = {
-    body: ""
+    body: "",
+    err: false
   };
   render() {
+    const { err } = this.state;
+    if (err) return <ErrorPage err={err} />;
     return (
       <div className="addTopicForm">
         <Card>
@@ -48,16 +52,16 @@ class AddComment extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { body } = this.state;
-    const { article_id, username } = this.props;
+    const { article_id, loggedInUser } = this.props;
     api
-      .postNewComment(article_id, { body, username })
+      .postNewComment(article_id, { body, username: loggedInUser })
       .then(() => {
         ReactDOM.findDOMNode(this.messageForm).reset();
         this.setState({ body: "" });
         this.props.fetchAllCommentsByArticleId();
       })
       .catch(err => {
-        console.log(err);
+        this.setState({ err });
       });
   };
 }

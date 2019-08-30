@@ -6,7 +6,8 @@ import { Link } from "@reach/router";
 import cooking from "../images/cooking.jpg";
 import coding from "../images/coding.jpg";
 import football from "../images/football.jpg";
-import AddTopic from "../components/AddTopic";
+import defaultTopic from "../images/defaultTopic.jpg";
+import TopicAdder from "../components/TopicAdder";
 import ErrorPage from "../pages/ErrorPage";
 
 class AllTopicsPage extends Component {
@@ -36,7 +37,7 @@ class AllTopicsPage extends Component {
                   <Card.Body>
                     <Card.Img
                       variant="top"
-                      src={ref[topic.slug]}
+                      src={ref[topic.slug] ? ref[topic.slug] : defaultTopic}
                       alt={`Card image: ${topic.slug} topic`}
                     />
                     <Card.Title>#{topic.slug}</Card.Title>
@@ -58,7 +59,7 @@ class AllTopicsPage extends Component {
             {addTopic ? "Close" : "Add topic"}
           </Button>
         )}
-        {addTopic ? <AddTopic fetchAllTopics={this.fetchAllTopics} /> : null}
+        {addTopic ? <TopicAdder fetchAllTopics={this.fetchAllTopics} /> : null}
       </>
     );
   }

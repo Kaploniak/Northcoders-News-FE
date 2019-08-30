@@ -5,23 +5,27 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Navigation from "./components/Navigation";
 import Header from "./components/Header";
 import Homepage from "./pages/Homepage";
-// import Footer from "./components/Footer";
 import AllTopicsPage from "./pages/AllTopicsPage";
 import ArticlePage from "./pages/ArticlePage";
 import AllArticlesPage from "./pages/AllArticlesPage";
 import AllUsersPage from "./pages/AllUsersPage";
 import AddArticlePage from "./pages/AddArticlePage";
+import SignInPage from "./pages/SignInPage";
+import LogInPage from "./pages/LogInPage";
+import LogOutPage from "./pages/LogOutPage";
 
 class App extends React.Component {
   state = {
-    loggedInUser: "jessjelly"
-    // loggedInUser: null
+    loggedInUser: null
   };
   render() {
     const { loggedInUser } = this.state;
     return (
       <div className="App">
-        <Navigation loggedInUser={loggedInUser} />
+        <Navigation
+          loggedInUser={loggedInUser}
+          setLoggedInUser={this.setLoggedInUser}
+        />
         <Header />
         <Router>
           <Homepage path="/" />
@@ -41,13 +45,18 @@ class App extends React.Component {
           <AllTopicsPage path="/topics" loggedInUser={loggedInUser} />
           <AllUsersPage path="/users" />
           <AddArticlePage path="article/form" loggedInUser={loggedInUser} />
+          <SignInPage path="/signin" />
+          <LogInPage path="/login" setLoggedInUser={this.setLoggedInUser} />
+          <LogOutPage path="/logout" setLoggedInUser={this.setLoggedInUser} />
 
           <Homepage default />
         </Router>
-        {/* <Footer /> */}
       </div>
     );
   }
+  setLoggedInUser = loggedInUser => {
+    this.setState({ loggedInUser });
+  };
 }
 
 export default App;

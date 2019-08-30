@@ -94,11 +94,3 @@ class SignInPage extends Component {
 }
 
 export default SignInPage;
-
-// {
-//   "username": "tickle122",
-//     "avatar_url": "https://www.spiritsurfers.net/monastery/wp-content/uploads/_41500270_mrtickle.jpg",
-//       "name": "Tom Tickle"
-// },
-
-// (/(?!^\d+$)^.+$/gm.test(username))

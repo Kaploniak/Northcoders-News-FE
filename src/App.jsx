@@ -13,6 +13,7 @@ import AddArticlePage from "./pages/AddArticlePage";
 import SignInPage from "./pages/SignInPage";
 import LogInPage from "./pages/LogInPage";
 import LogOutPage from "./pages/LogOutPage";
+import ProfilePage from "./pages/ProfilePage";
 
 class App extends React.Component {
   state = {
@@ -48,6 +49,7 @@ class App extends React.Component {
           <SignInPage path="/signin" />
           <LogInPage path="/login" setLoggedInUser={this.setLoggedInUser} />
           <LogOutPage path="/logout" setLoggedInUser={this.setLoggedInUser} />
+          <ProfilePage path="/users/:loggedInUser" />
 
           <Homepage default />
         </Router>

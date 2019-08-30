@@ -12,14 +12,15 @@ class AddArticlePage extends Component {
     title: "",
     body: "",
     topic: "coding",
-    slug: null,
-    description: null,
+    slug: "",
+    description: "",
     addTopic: false,
     isLoading: true,
-    err: false
+    err: false,
+    errorMsg: null
   };
   render() {
-    const { addTopic, topics, isLoading, err } = this.state;
+    const { addTopic, topics, isLoading, err, errorMsg } = this.state;
 
     if (err) return <ErrorPage err={err} />;
     if (isLoading) return <Loading text="Loading the articles" />;
@@ -80,6 +81,7 @@ class AddArticlePage extends Component {
                         onChange={this.handleChange}
                       />
                     </Form.Group>
+                    {errorMsg && errorMsg}
                   </>
                 )}
                 <Form.Group controlId="body">
@@ -124,8 +126,8 @@ class AddArticlePage extends Component {
     this.setState(currentState => {
       return {
         addTopic: !currentState.addTopic,
-        slug: null,
-        description: null
+        slug: "",
+        description: ""
       };
     });
   };
@@ -136,43 +138,47 @@ class AddArticlePage extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const { title, body, topic, slug, description } = this.state;
+    const { title, body, topic, slug, description, addTopic } = this.state;
     const { loggedInUser } = this.props;
-    if (!slug) {
+    if (!addTopic) {
       api
         .postNewArticle({ title, body, topic, author: loggedInUser })
-        .then(() => {
+        .then(({ article }) => {
           ReactDOM.findDOMNode(this.messageForm).reset();
           this.setState({
             title: "",
             body: "",
             topic: "coding"
           });
-          navigate(`/`);
+          navigate(`/article/${article.article_id}`);
         })
         .catch(err => {
           this.setState({ err, isLoading: false });
         });
-    } else if (slug) {
-      api
-        .postNewTopic({ slug, description })
-        .then(() => {
-          api.postNewArticle({ title, body, slug, author: loggedInUser });
-        })
-        .then(() => {
-          ReactDOM.findDOMNode(this.messageForm).reset();
-          this.setState({
-            slug: "",
-            description: "",
-            title: "",
-            body: "",
-            topic: "coding"
+    } else if (addTopic) {
+      if (slug.length < 3 && description.length < 5) {
+        this.setState({ errorMsg: "Topic name or description too short." });
+      } else {
+        api
+          .postNewTopic({ slug, description })
+          .then(() => {
+            api.postNewArticle({ title, body, slug, author: loggedInUser });
+          })
+          .then(article => {
+            ReactDOM.findDOMNode(this.messageForm).reset();
+            this.setState({
+              slug: "",
+              description: "",
+              title: "",
+              body: "",
+              topic: "coding"
+            });
+            navigate(`/article/${article.article_id}`);
+          })
+          .catch(err => {
+            this.setState({ err, isLoading: false });
           });
-          navigate(`/`);
-        })
-        .catch(err => {
-          this.setState({ err, isLoading: false });
-        });
+      }
     }
   };
 }

@@ -25,8 +25,7 @@ class AddComment extends Component {
               <Form.Group controlId="body">
                 <Form.Label>Comment:</Form.Label>
                 <Form.Control
-                  as="textarea"
-                  rows="4"
+                  as="input"
                   placeholder="Add yours comment...."
                   onChange={this.handleChange}
                 />
@@ -58,6 +57,7 @@ class AddComment extends Component {
       .then(() => {
         ReactDOM.findDOMNode(this.messageForm).reset();
         this.setState({ body: "" });
+        // to do
         this.props.fetchAllCommentsByArticleId();
       })
       .catch(err => {

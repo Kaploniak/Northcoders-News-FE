@@ -70,7 +70,13 @@ export const postNewTopic = async ({ slug, description }) => {
 };
 
 export const postNewArticle = async ({ title, body, topic, author }) => {
-  await axios.post(`${baseURL}/articles`, { title, body, topic, author });
+  const { data } = await axios.post(`${baseURL}/articles`, {
+    title,
+    body,
+    topic,
+    author
+  });  
+  return data;
 };
 
 export const postNewComment = async (article_id, { body, username }) => {
@@ -97,7 +103,6 @@ export const postNewUser = async ({ username, name, avatar_url }) => {
 };
 
 export const getUsersByUsername = async ({ username }) => {
-  console.log(username);
   const { data } = await axios.get(`${baseURL}/users/${username}`);
   return data;
 };

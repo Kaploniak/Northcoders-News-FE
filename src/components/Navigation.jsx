@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import nc from "../images/nc-white-long.png";
 import * as api from "../api";
-import { Link } from "@reach/router";
+import { Link, navigate } from "@reach/router";
 import {
   Navbar,
   Nav,
   NavDropdown,
-  Form,
-  FormControl,
+  // Form,
+  // FormControl,
   Button
 } from "react-bootstrap";
 
@@ -61,33 +61,57 @@ class Navigation extends Component {
                 Show all topics
               </Link>
             </NavDropdown>
-            <Link className="nav-link" to="/article/form">
-              Add Article
-            </Link>
+            {loggedInUser && (
+              <Link className="nav-link" to="/article/form">
+                Add Article
+              </Link>
+            )}
           </Nav>
           <Nav>
-            <Form inline>
+            {/* <Form inline>
               <FormControl
                 type="text"
                 placeholder="Search"
                 className="mr-sm-2"
               />
               <Button variant="outline-secondary">Search</Button>
-            </Form>
+            </Form> */}
             {loggedInUser ? (
               <Link className="nav-link" to={`/users/${loggedInUser}`}>
                 {loggedInUser}
               </Link>
             ) : (
-              <Link className="nav-link" eventKey={2} to="#memes">
-                Log in | Sign in
-              </Link>
+              <>
+                <Link className="nav-link" to={`/signin`}>
+                  Sign In
+                </Link>
+                <Link className="nav-link" to={`/login`}>
+                  Log In
+                </Link>
+              </>
+            )}
+            {loggedInUser && (
+              <Button
+                id="logoutBtn"
+                className="nav-link"
+                variant="secondary"
+                size="sm"
+                onClick={this.handleLogOutUser}
+              >
+                Log Out
+              </Button>
             )}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
     );
   }
+
+  handleLogOutUser = () => {
+    const { setLoggedInUser } = this.props;
+    setLoggedInUser(null);
+    navigate("/logout");
+  };
 
   componentDidMount() {
     this.fetchAllTopics();

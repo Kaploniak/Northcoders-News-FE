@@ -2,14 +2,7 @@ import React, { Component } from "react";
 import nc from "../images/nc-white-long.png";
 import * as api from "../api";
 import { Link, navigate } from "@reach/router";
-import {
-  Navbar,
-  Nav,
-  NavDropdown,
-  // Form,
-  // FormControl,
-  Button
-} from "react-bootstrap";
+import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
 
 class Navigation extends Component {
   state = {
@@ -68,17 +61,9 @@ class Navigation extends Component {
             )}
           </Nav>
           <Nav>
-            {/* <Form inline>
-              <FormControl
-                type="text"
-                placeholder="Search"
-                className="mr-sm-2"
-              />
-              <Button variant="outline-secondary">Search</Button>
-            </Form> */}
             {loggedInUser ? (
               <Link className="nav-link" to={`/users/${loggedInUser}`}>
-                {loggedInUser}
+                Logged in as: {loggedInUser}
               </Link>
             ) : (
               <>

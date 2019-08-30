@@ -4,7 +4,6 @@ import Pagination from "react-bootstrap/Pagination";
 class ArticlePagination extends Component {
   state = {
     p: 1,
-    total_count: 0,
     limit: 10
   };
   render() {
@@ -24,14 +23,8 @@ class ArticlePagination extends Component {
   }
 
   handleClick = e => {
-    this.setState({ p: e.target.text });
+    this.props.updatePage(e.target.text);
   };
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.p !== this.state.p) {
-      this.props.updatePage(this.state.p);
-    }
-  }
 }
 
 export default ArticlePagination;

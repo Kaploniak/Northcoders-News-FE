@@ -72,9 +72,7 @@ class ArticleCard extends Component {
   }
 
   fetchArticleById = () => {
-    const {
-      article: { article_id }
-    } = this.props;
+    const { article_id } = this.props;
     api
       .getArticleById(article_id)
       .then(({ article }) => {

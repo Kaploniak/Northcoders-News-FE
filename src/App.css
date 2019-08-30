@@ -47,6 +47,7 @@ body {
 .header {
   margin-top: 7.2rem;
   margin-bottom: 1rem;
+  font-weight: bold;
 }
 
 /* === Footer === */
@@ -200,4 +201,15 @@ body {
   font-size: 0.9rem;
   display: block;
   padding: 0.8rem;
+}
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profilePicture {
+  padding-bottom: 1rem;
 }

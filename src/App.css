@@ -189,3 +189,15 @@ body {
 .N {
   color: red;
 }
+
+#logoutBtn {
+  padding: 0;
+  background: #343a40;
+  border: 0;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: block;
+  padding: 0.8rem;
+}

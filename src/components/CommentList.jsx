@@ -4,7 +4,7 @@ import * as api from "../api";
 import Button from "react-bootstrap/Button";
 import CommentCard from "../components/CommentCard";
 import CommentSort from "./CommentSort";
-import AddComment from "./AddComment";
+import AddComment from "./CommentAdder";
 import ErrorPage from "../pages/ErrorPage";
 
 class CommentList extends Component {
@@ -18,13 +18,27 @@ class CommentList extends Component {
   };
   render() {
     const { comments, isLoading, showAddCommentForm, err } = this.state;
-    const { loggedInUser, article_id, author } = this.props;
+    const { loggedInUser, article_id } = this.props;
 
     if (err) return <ErrorPage err={err} />;
     if (isLoading) return <Loading text="Loading the comments" />;
     return (
       <div className="main-commentList">
         <CommentSort handleClick={this.handleClick} />
+        {loggedInUser && (
+          <div className="articleButton">
+            <Button variant="secondary" onClick={this.handleShowAddCommentForm}>
+              Add comment
+            </Button>
+          </div>
+        )}
+        {showAddCommentForm && (
+          <AddComment
+            loggedInUser={loggedInUser}
+            article_id={article_id}
+            fetchAllCommentsByArticleId={this.fetchAllCommentsByArticleId}
+          />
+        )}
         <ul className="commentList">
           {comments.map(comment => {
             return (
@@ -38,21 +52,6 @@ class CommentList extends Component {
             );
           })}
         </ul>
-        {loggedInUser && (
-          <div className="articleButton">
-            <Button variant="secondary" onClick={this.handleShowAddCommentForm}>
-              Add comment
-            </Button>
-          </div>
-        )}
-        {showAddCommentForm && (
-          <AddComment
-            loggedInUser={loggedInUser}
-            article_id={article_id}
-            username={author}
-            fetchAllCommentsByArticleId={this.fetchAllCommentsByArticleId}
-          />
-        )}
       </div>
     );
   }

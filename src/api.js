@@ -95,3 +95,9 @@ export const postNewUser = async ({ username, name, avatar_url }) => {
     avatar_url
   });
 };
+
+export const getUsersByUsername = async ({ username }) => {
+  console.log(username);
+  const { data } = await axios.get(`${baseURL}/users/${username}`);
+  return data;
+};

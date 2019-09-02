@@ -75,15 +75,19 @@ export const postNewArticle = async ({ title, body, topic, author }) => {
     body,
     topic,
     author
-  });  
+  });
   return data;
 };
 
 export const postNewComment = async (article_id, { body, username }) => {
-  await axios.post(`${baseURL}/articles/${article_id}/comments`, {
-    body,
-    username
-  });
+  const { data } = await axios.post(
+    `${baseURL}/articles/${article_id}/comments`,
+    {
+      body,
+      username
+    }
+  );
+  return data;
 };
 
 export const deleteArticle = async article_id => {

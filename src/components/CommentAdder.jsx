@@ -13,7 +13,7 @@ class AddComment extends Component {
     const { err } = this.state;
     if (err) return <ErrorPage err={err} />;
     return (
-      <div className="addTopicForm">
+      <div className="addCommentForm">
         <Card>
           <Card.Body>
             <Form

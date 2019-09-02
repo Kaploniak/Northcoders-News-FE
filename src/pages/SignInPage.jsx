@@ -6,12 +6,15 @@ import { navigate } from "@reach/router";
 
 class SignInPage extends Component {
   state = {
+    errorMsg: null,
+    err: null,
     username: "",
     name: "",
     avatar_url:
       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
   };
   render() {
+    const { err, errorMsg } = this.state;
     return (
       <div className="signInForm">
         <Card>
@@ -68,6 +71,8 @@ class SignInPage extends Component {
                 Sign In
               </Button>
             </Form>
+            {err && err.response.data.msg}
+            {errorMsg && errorMsg}
           </Card.Body>
         </Card>
       </div>
@@ -80,22 +85,25 @@ class SignInPage extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { username, name, avatar_url } = this.state;
-
-    api
-      .postNewUser({ username, name, avatar_url })
-      .then(() => {
-        ReactDOM.findDOMNode(this.messageForm).reset();
-        this.setState({
-          username: "",
-          name: "",
-          avatar_url:
-            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+    if (username.length < 3 && name.length < 5) {
+      this.setState({ errorMsg: "Username or Name too short." });
+    } else {
+      api
+        .postNewUser({ username, name, avatar_url })
+        .then(() => {
+          ReactDOM.findDOMNode(this.messageForm).reset();
+          this.setState({
+            username: "",
+            name: "",
+            avatar_url:
+              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+          });
+          navigate(`/login`);
+        })
+        .catch(err => {
+          this.setState({ err });
         });
-        navigate(`/login`);
-      })
-      .catch(err => {
-        this.setState({ err, isLoading: false });
-      });
+    }
   };
 }
 

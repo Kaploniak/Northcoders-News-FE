@@ -4,13 +4,15 @@ import { Card, Button } from "react-bootstrap";
 import Voting from "./Voting";
 import * as api from "../api";
 import ErrorPage from "../pages/ErrorPage";
+import Loading from "../utils/Loading";
 
 class CommentCard extends Component {
   state = {
-    err: false
+    err: false,
+    isLoading: false
   };
   render() {
-    const { err } = this.state;
+    const { err, isLoading } = this.state;
     const { comment, loggedInUser } = this.props;
 
     if (err) return <ErrorPage err={err} />;
@@ -23,6 +25,7 @@ class CommentCard extends Component {
               <Button variant="danger" onClick={this.handleDeleteComment}>
                 Delete comment
               </Button>
+              {isLoading && <Loading />}
             </div>
           )}
           <Card.Title>{comment.author}</Card.Title>
@@ -43,14 +46,17 @@ class CommentCard extends Component {
 
   handleDeleteComment = () => {
     const { comment, commentDelete } = this.props;
-    api
-      .deleteComment(comment.comment_id)
-      .then(() => {
-        commentDelete(comment.comment_id);
-      })
-      .catch(err => {
-        this.setState({ err, isLoading: false });
-      });
+    this.setState({ isLoading: true }, () => {
+      api
+        .deleteComment(comment.comment_id)
+        .then(() => {
+          this.setState({ isLoading: false });
+          commentDelete(comment.comment_id);
+        })
+        .catch(err => {
+          this.setState({ err });
+        });
+    });
   };
 }
 

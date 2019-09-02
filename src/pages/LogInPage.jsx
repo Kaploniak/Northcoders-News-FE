@@ -8,6 +8,7 @@ import ReactDOM from "react-dom";
 
 class LogInPage extends Component {
   state = {
+    errorMsg: null,
     users: [],
     isLoading: true,
     err: false,
@@ -15,9 +16,9 @@ class LogInPage extends Component {
     wrongLogin: false
   };
   render() {
-    const { isLoading, err, wrongLogin } = this.state;
+    const { isLoading, err, wrongLogin, errorMsg } = this.state;
     if (err) return <ErrorPage err={err} />;
-    if (isLoading) return <Loading text="Loading the article..." />;
+    if (isLoading) return <Loading text="Loading..." />;
     return (
       <div className="loginForm">
         <Card>
@@ -48,8 +49,9 @@ class LogInPage extends Component {
               >
                 Log In
               </Button>
-              {wrongLogin && <p>Log In details incorrect.</p>}
             </Form>
+            {wrongLogin && <p>Log In details incorrect.</p>}
+            {errorMsg && errorMsg}
           </Card.Body>
         </Card>
       </div>
@@ -68,12 +70,13 @@ class LogInPage extends Component {
     const arrOfUsernames = users.map(user => {
       return user.username;
     });
-
-    if (arrOfUsernames.includes(username)) {
+    if (username.length < 3) {
+      this.setState({ errorMsg: "Username too short.", wrongLogin: false });
+    } else if (arrOfUsernames.includes(username)) {
       setLoggedInUser(username);
       navigate(`/`);
     } else {
-      this.setState({ wrongLogin: true });
+      this.setState({ wrongLogin: true, errorMsg: false });
     }
     ReactDOM.findDOMNode(this.messageForm).reset();
   };

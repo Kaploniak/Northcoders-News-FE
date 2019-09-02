@@ -23,7 +23,7 @@ class AddArticlePage extends Component {
     const { addTopic, topics, isLoading, err, errorMsg } = this.state;
 
     if (err) return <ErrorPage err={err} />;
-    if (isLoading) return <Loading text="Loading the articles" />;
+    if (isLoading) return <Loading text="Loading the article" />;
     return (
       <>
         <h2>Add new article</h2>
@@ -100,6 +100,7 @@ class AddArticlePage extends Component {
                   Submit
                 </Button>
               </Form>
+              {errorMsg && errorMsg}
             </Card.Body>
           </Card>
         </div>
@@ -140,22 +141,28 @@ class AddArticlePage extends Component {
     const { title, body, topic, slug, description, addTopic } = this.state;
     const { loggedInUser } = this.props;
     if (!addTopic) {
-      api
-        .postNewArticle({ title, body, topic, author: loggedInUser })
-        .then(({ article }) => {
-          ReactDOM.findDOMNode(this.messageForm).reset();
-          this.setState({
-            title: "",
-            body: "",
-            topic: "coding"
+      if (title.length < 3 && body.length < 5) {
+        this.setState({ errorMsg: "Title or article too short." });
+      } else {
+        api
+          .postNewArticle({ title, body, topic, author: loggedInUser })
+          .then(({ article }) => {
+            ReactDOM.findDOMNode(this.messageForm).reset();
+            this.setState({
+              title: "",
+              body: "",
+              topic: "coding"
+            });
+            navigate(`/article/${article.article_id}`);
+          })
+          .catch(err => {
+            this.setState({ err, isLoading: false });
           });
-          navigate(`/article/${article.article_id}`);
-        })
-        .catch(err => {
-          this.setState({ err, isLoading: false });
-        });
+      }
     } else if (addTopic) {
-      if (slug.length < 3 && description.length < 5) {
+      if (title.length < 3 && body.length < 5) {
+        this.setState({ errorMsg: "Title or article too short." });
+      } else if (slug.length < 3 && description.length < 5) {
         this.setState({ errorMsg: "Topic name or description too short." });
       } else {
         api

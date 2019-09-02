@@ -3,15 +3,18 @@ import ReactDOM from "react-dom";
 import { Form, Card, Button } from "react-bootstrap";
 import * as api from "../api";
 import ErrorPage from "../pages/ErrorPage";
+import Loading from "../utils/Loading";
 
 class AddTopic extends Component {
   state = {
     slug: "",
     description: "",
-    err: false
+    err: false,
+    isLoading: false,
+    errorMsg: null
   };
   render() {
-    const { err } = this.state;
+    const { err, isLoading, errorMsg } = this.state;
     if (err) return <ErrorPage err={err} />;
     return (
       <div className="addTopicForm">
@@ -46,7 +49,9 @@ class AddTopic extends Component {
               >
                 Submit
               </Button>
+              {isLoading && <Loading />}
             </Form>
+            {errorMsg && errorMsg}
           </Card.Body>
         </Card>
       </div>
@@ -61,16 +66,22 @@ class AddTopic extends Component {
     e.preventDefault();
     const { slug, description } = this.state;
     const { fetchAllTopics } = this.props;
-    api
-      .postNewTopic({ slug, description })
-      .then(() => {
-        ReactDOM.findDOMNode(this.messageForm).reset();
-        this.setState({ slug: "", description: "" });
-        fetchAllTopics();
-      })
-      .catch(err => {
-        this.setState({ err });
+    if (slug.length < 3 && description.length < 5) {
+      this.setState({ errorMsg: "Title or article too short." });
+    } else {
+      this.setState({ isLoading: true }, () => {
+        api
+          .postNewTopic({ slug, description })
+          .then(() => {
+            ReactDOM.findDOMNode(this.messageForm).reset();
+            this.setState({ slug: "", description: "", isLoading: false });
+            fetchAllTopics();
+          })
+          .catch(err => {
+            this.setState({ err });
+          });
       });
+    }
   };
 }
 

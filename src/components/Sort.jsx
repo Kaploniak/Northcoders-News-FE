@@ -23,7 +23,7 @@ class Sort extends Component {
           value="created_at"
           onClick={this.handleSortClick}
         >
-          by create time
+          by date
         </Dropdown.Item>
         <Dropdown.Item
           active={sort_by === "author"}
@@ -62,7 +62,7 @@ class Sort extends Component {
             value="comment_count"
             onClick={this.handleSortClick}
           >
-            by coments
+            by comments
           </Dropdown.Item>
         )}
         <Dropdown.Divider />

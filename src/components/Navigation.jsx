@@ -3,13 +3,16 @@ import nc from "../images/nc-white-long.png";
 import * as api from "../api";
 import { Link, navigate } from "@reach/router";
 import { Navbar, Nav, NavDropdown, Button } from "react-bootstrap";
+import Loading from "../utils/Loading";
 
 class Navigation extends Component {
   state = {
-    topics: []
+    topics: [],
+    isLoading: true,
+    err: false
   };
   render() {
-    const { topics } = this.state;
+    const { topics, isLoading, err } = this.state;
     const { loggedInUser } = this.props;
     return (
       <Navbar
@@ -38,18 +41,24 @@ class Navigation extends Component {
               Users
             </Nav.Link>
             <NavDropdown title="Topics" id="collasible-nav-dropdown">
-              {topics.map((topic, i) => {
-                return (
-                  <NavDropdown.Item
-                    eventKey={9 + i}
-                    as={Link}
-                    to={`/articles/${topic.slug}/topics`}
-                    key={topic.slug}
-                  >
-                    {topic.slug}
-                  </NavDropdown.Item>
-                );
-              })}
+              {isLoading ? (
+                <Loading />
+              ) : err ? (
+                <p>Something went wrong can't get topics</p>
+              ) : (
+                topics.map((topic, i) => {
+                  return (
+                    <NavDropdown.Item
+                      eventKey={9 + i}
+                      as={Link}
+                      to={`/articles/${topic.slug}/topics`}
+                      key={topic.slug}
+                    >
+                      {topic.slug}
+                    </NavDropdown.Item>
+                  );
+                })
+              )}
               <NavDropdown.Divider />
               <NavDropdown.Item eventKey="9" as={Link} to="/topics">
                 Show all topics
@@ -104,9 +113,14 @@ class Navigation extends Component {
   }
 
   fetchAllTopics = () => {
-    api.getAllTopics().then(({ topics }) => {
-      this.setState({ topics, isLoading: false });
-    });
+    api
+      .getAllTopics()
+      .then(({ topics }) => {
+        this.setState({ topics, isLoading: false });
+      })
+      .catch(err => {
+        this.setState({ err, isLoading: false });
+      });
   };
 }
 

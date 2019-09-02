@@ -26,7 +26,7 @@ class AllTopicsPage extends Component {
       football
     };
     if (err) return <ErrorPage err={err} />;
-    if (isLoading) return <Loading text="Loading the article..." />;
+    if (isLoading) return <Loading text="Loading the topics..." />;
     return (
       <>
         <div className="topicsList">

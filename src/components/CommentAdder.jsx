@@ -51,14 +51,13 @@ class AddComment extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { body } = this.state;
-    const { article_id, loggedInUser } = this.props;
+    const { article_id, loggedInUser, comentsUpdate } = this.props;
     api
       .postNewComment(article_id, { body, username: loggedInUser })
-      .then(() => {
+      .then(comment => {
         ReactDOM.findDOMNode(this.messageForm).reset();
         this.setState({ body: "" });
-        // to do
-        this.props.fetchAllCommentsByArticleId();
+        comentsUpdate(comment);
       })
       .catch(err => {
         this.setState({ err });

@@ -42,11 +42,11 @@ class CommentCard extends Component {
   }
 
   handleDeleteComment = () => {
-    const { comment } = this.props;
+    const { comment, commentDelete } = this.props;
     api
       .deleteComment(comment.comment_id)
       .then(() => {
-        this.props.fetchAllCommentsByArticleId();
+        commentDelete(comment.comment_id);
       })
       .catch(err => {
         this.setState({ err, isLoading: false });

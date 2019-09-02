@@ -40,7 +40,6 @@ class ProfilePage extends Component {
 
   fetchUserByUsername = () => {
     const { loggedInUser } = this.props;
-    console.log(loggedInUser, "<<<<<<");
     api
       .getUsersByUsername({ username: loggedInUser })
       .then(({ user }) => {

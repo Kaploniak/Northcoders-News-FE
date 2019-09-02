@@ -3,9 +3,9 @@ import Loading from "../utils/Loading";
 import * as api from "../api";
 import Button from "react-bootstrap/Button";
 import CommentCard from "../components/CommentCard";
-import CommentSort from "./CommentSort";
-import AddComment from "./CommentAdder";
+import CommentAdder from "./CommentAdder";
 import ErrorPage from "../pages/ErrorPage";
+import Sort from "./Sort";
 
 class CommentList extends Component {
   state = {
@@ -24,7 +24,7 @@ class CommentList extends Component {
     if (isLoading) return <Loading text="Loading the comments" />;
     return (
       <div className="main-commentList">
-        <CommentSort handleClick={this.handleClick} />
+        <Sort handleClick={this.handleClick} />
         {loggedInUser && (
           <div className="articleButton">
             <Button variant="secondary" onClick={this.handleShowAddCommentForm}>
@@ -33,10 +33,10 @@ class CommentList extends Component {
           </div>
         )}
         {showAddCommentForm && (
-          <AddComment
+          <CommentAdder
             loggedInUser={loggedInUser}
             article_id={article_id}
-            fetchAllCommentsByArticleId={this.fetchAllCommentsByArticleId}
+            comentsUpdate={this.comentsUpdate}
           />
         )}
         <ul className="commentList">
@@ -46,7 +46,7 @@ class CommentList extends Component {
                 <CommentCard
                   comment={comment}
                   loggedInUser={loggedInUser}
-                  fetchAllCommentsByArticleId={this.fetchAllCommentsByArticleId}
+                  commentDelete={this.commentDelete}
                 />
               </li>
             );
@@ -82,6 +82,23 @@ class CommentList extends Component {
       .catch(err => {
         this.setState({ err, isLoading: false });
       });
+  };
+
+  comentsUpdate = ({ comment }) => {
+    this.setState(currentState => {
+      const { comments } = currentState;
+      return { comments: [comment, ...comments] };
+    });
+  };
+
+  commentDelete = comment_id => {
+    this.setState(currentState => {
+      const { comments } = currentState;
+      const updatedComments = comments.filter(comment => {
+        return comment.comment_id !== comment_id;
+      });
+      return { comments: updatedComments };
+    });
   };
 
   handleShowAddCommentForm = () => {

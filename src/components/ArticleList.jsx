@@ -3,8 +3,8 @@ import Loading from "../utils/Loading";
 import * as api from "../api";
 import ArticleCard from "./ArticleCard";
 import ArticlePagination from "./ArticlePagination";
-import ArticleSort from "./ArticleSort";
 import ErrorPage from "../pages/ErrorPage";
+import Sort from "../components/Sort";
 
 class ArticleList extends Component {
   state = {
@@ -33,7 +33,12 @@ class ArticleList extends Component {
           />
         )}
         {sortOption && (
-          <ArticleSort className="articleSort" handleClick={this.handleClick} />
+          <Sort
+            className="articleSort"
+            handleClick={this.handleClick}
+            sortArticles={true}
+            updatePage={this.updatePage}
+          />
         )}
         <ul className="articleList">
           {articles.map(article => {

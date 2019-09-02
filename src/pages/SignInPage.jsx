@@ -13,58 +13,64 @@ class SignInPage extends Component {
   };
   render() {
     return (
-      <Card>
-        <Card.Body>
-          <Form
-            id="myForm"
-            className="formAddArticle"
-            ref={form => (this.messageForm = form)}
-            onSubmit={this.onSubmit}
-          >
-            <Form.Group controlId="username">
-              <Form.Label>Username</Form.Label>
-              <Form.Control
-                placeholder="Username"
-                onChange={this.handleChange}
-              />
-            </Form.Group>
-            <Form.Group controlId="name">
-              <Form.Label>Full Name</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Full Name"
-                onChange={this.handleChange}
-              />
-            </Form.Group>
-            <Form.Row>
-              <Form.Group as={Col} controlId="password">
-                <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" disabled />
-              </Form.Group>
-              <Form.Group as={Col} controlId="confirmPassword">
-                <Form.Label>Confirm Password</Form.Label>
+      <div className="signInForm">
+        <Card>
+          <Card.Body>
+            <Form
+              id="myForm"
+              className="formAddArticle"
+              ref={form => (this.messageForm = form)}
+              onSubmit={this.onSubmit}
+            >
+              <Form.Group controlId="username">
+                <Form.Label>Username</Form.Label>
                 <Form.Control
-                  type="password"
-                  placeholder="Confirm Password"
-                  disabled
+                  placeholder="Username"
+                  onChange={this.handleChange}
                 />
               </Form.Group>
-            </Form.Row>
-            <Form.Group controlId="avatar_url" onChange={this.handleChange}>
-              <Form.Label>Avatar</Form.Label>
-              <Form.Control placeholder="Avatar URL" />
-            </Form.Group>
+              <Form.Group controlId="name">
+                <Form.Label>Full Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Full Name"
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+              <Form.Row>
+                <Form.Group as={Col} controlId="password">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Password"
+                    disabled
+                  />
+                </Form.Group>
+                <Form.Group as={Col} controlId="confirmPassword">
+                  <Form.Label>Confirm Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Confirm Password"
+                    disabled
+                  />
+                </Form.Group>
+              </Form.Row>
+              <Form.Group controlId="avatar_url" onChange={this.handleChange}>
+                <Form.Label>Avatar</Form.Label>
+                <Form.Control placeholder="Avatar URL" />
+              </Form.Group>
 
-            <Button
-              variant="secondary"
-              type="submit"
-              onClick={this.handleSubmit}
-            >
-              Sign In
-            </Button>
-          </Form>
-        </Card.Body>
-      </Card>
+              <Button
+                variant="secondary"
+                type="submit"
+                onClick={this.handleSubmit}
+              >
+                Sign In
+              </Button>
+            </Form>
+          </Card.Body>
+        </Card>
+      </div>
     );
   }
   handleChange = e => {

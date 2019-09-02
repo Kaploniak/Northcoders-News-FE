@@ -25,7 +25,7 @@ class ArticleCard extends Component {
     if (err) return <ErrorPage err={err} />;
     if (isLoading) return <Loading text="Loading the article..." />;
     return (
-      <Card style={{ width: "18rem" }} className="card">
+      <Card style={{ width: "22rem", height: "34rem" }} className="card">
         <Card.Body>
           <Link to={`/articles/${article.topic}/topics`}>
             <Card.Img
@@ -34,7 +34,11 @@ class ArticleCard extends Component {
               alt={`Card image: ${article.topic} topic`}
             />
           </Link>
-          <Card.Title>{article.title}</Card.Title>
+          <Card.Title>
+            {article.title.length > 50
+              ? article.title.slice(0, 60) + " ..."
+              : article.title}
+          </Card.Title>
           <Card.Subtitle className="mb-2 text-muted">
             {datePrettier(article.created_at)}
           </Card.Subtitle>

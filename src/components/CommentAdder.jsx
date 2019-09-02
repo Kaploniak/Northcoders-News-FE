@@ -57,10 +57,10 @@ class AddComment extends Component {
     e.preventDefault();
     const { body } = this.state;
     const { article_id, loggedInUser, comentsUpdate } = this.props;
-    if (body.length < 2 || body === undefined) {
+    if (body.length < 3 || body === undefined) {
       this.setState({ validation: true });
     } else {
-      this.setState({ isLoading: true }, () => {
+      this.setState({ isLoading: true, validation: false }, () => {
         api
           .postNewComment(article_id, { body, username: loggedInUser })
           .then(comment => {

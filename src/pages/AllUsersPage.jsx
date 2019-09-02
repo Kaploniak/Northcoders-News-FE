@@ -14,7 +14,7 @@ class AllUsersPage extends Component {
   render() {
     const { users, isLoading, err } = this.state;
     if (err) return <ErrorPage err={err} />;
-    if (isLoading) return <Loading text="Loading the article..." />;
+    if (isLoading) return <Loading text="Loading the users..." />;
     return (
       <>
         <h2>All users</h2>

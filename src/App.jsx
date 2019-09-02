@@ -14,6 +14,7 @@ import SignInPage from "./pages/SignInPage";
 import LogInPage from "./pages/LogInPage";
 import LogOutPage from "./pages/LogOutPage";
 import ProfilePage from "./pages/ProfilePage";
+import Info from "./components/Info";
 
 class App extends React.Component {
   state = {
@@ -28,6 +29,7 @@ class App extends React.Component {
           setLoggedInUser={this.setLoggedInUser}
         />
         <Header />
+        <Info />
         <Router>
           <Homepage path="/" />
           <AllArticlesPage

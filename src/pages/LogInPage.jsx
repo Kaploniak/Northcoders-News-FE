@@ -19,38 +19,40 @@ class LogInPage extends Component {
     if (err) return <ErrorPage err={err} />;
     if (isLoading) return <Loading text="Loading the article..." />;
     return (
-      <Card>
-        <Card.Body>
-          <Form
-            id="myForm"
-            className="formAddArticle"
-            ref={form => (this.messageForm = form)}
-            onSubmit={this.onSubmit}
-          >
-            <Form.Group controlId="username">
-              <Form.Label>Username</Form.Label>
-              <Form.Control
-                placeholder="Username"
-                onChange={this.handleChange}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" disabled />
-            </Form.Group>
-
-            <Button
-              variant="secondary"
-              type="submit"
-              onClick={this.handleSubmit}
+      <div className="loginForm">
+        <Card>
+          <Card.Body>
+            <Form
+              id="myForm"
+              className="formAddArticle"
+              ref={form => (this.messageForm = form)}
+              onSubmit={this.onSubmit}
             >
-              Log In
-            </Button>
-            {wrongLogin && <p>Log In details incorrect.</p>}
-          </Form>
-        </Card.Body>
-      </Card>
+              <Form.Group controlId="username">
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  placeholder="Username"
+                  onChange={this.handleChange}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="password">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" placeholder="Password" disabled />
+              </Form.Group>
+
+              <Button
+                variant="secondary"
+                type="submit"
+                onClick={this.handleSubmit}
+              >
+                Log In
+              </Button>
+              {wrongLogin && <p>Log In details incorrect.</p>}
+            </Form>
+          </Card.Body>
+        </Card>
+      </div>
     );
   }
 

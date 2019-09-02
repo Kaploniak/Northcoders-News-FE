@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Loading from "../utils/Loading";
-import * as api from "../api";
 import Card from "react-bootstrap/Card";
 import { Link } from "@reach/router";
 import { datePrettier } from "../utils/utils";
@@ -72,20 +71,9 @@ class ArticleCard extends Component {
   }
 
   componentDidMount() {
-    this.fetchArticleById();
+    const { article } = this.props;
+    this.setState({ article, isLoading: false, type: article.type });
   }
-
-  fetchArticleById = () => {
-    const { article_id } = this.props;
-    api
-      .getArticleById(article_id)
-      .then(({ article }) => {
-        this.setState({ article, isLoading: false, type: article.type });
-      })
-      .catch(err => {
-        this.setState({ err, isLoading: false });
-      });
-  };
 }
 
 export default ArticleCard;

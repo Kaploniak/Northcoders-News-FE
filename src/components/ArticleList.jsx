@@ -44,7 +44,10 @@ class ArticleList extends Component {
           {articles.map(article => {
             return (
               <li key={article.article_id}>
-                <ArticleCard article_id={article.article_id} />
+                <ArticleCard
+                  article_id={article.article_id}
+                  article={article}
+                />
               </li>
             );
           })}

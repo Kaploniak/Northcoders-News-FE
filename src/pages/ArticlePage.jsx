@@ -27,7 +27,7 @@ class ArticlePage extends Component {
       football
     };
     if (err) return <ErrorPage err={err} />;
-    if (isLoading) return <Loading text="Loading the articles" />;
+    if (isLoading) return <Loading text="Loading the article" />;
     return (
       <Jumbotron>
         {loggedInUser && loggedInUser === article.author && (

@@ -32,7 +32,6 @@ class AddArticlePage extends Component {
             <Card.Body>
               <Form
                 id="myForm"
-                className="formAddArticle"
                 ref={form => (this.messageForm = form)}
                 onSubmit={this.onSubmit}
               >

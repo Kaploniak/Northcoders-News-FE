@@ -28,51 +28,52 @@ class Navigation extends Component {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="mr-auto">
-            <Link className="nav-link" to="/">
+            <Nav.Link eventKey="1" as={Link} to="/">
               Home
-            </Link>
-            <Link className="nav-link" to="/articles">
+            </Nav.Link>
+            <Nav.Link eventKey="2" as={Link} to="/articles">
               Articles
-            </Link>
-            <Link className="nav-link" to="/users">
+            </Nav.Link>
+            <Nav.Link eventKey="3" as={Link} to="/users">
               Users
-            </Link>
+            </Nav.Link>
             <NavDropdown title="Topics" id="collasible-nav-dropdown">
-              {topics.map(topic => {
+              {topics.map((topic, i) => {
                 return (
-                  <Link
-                    className="dropdown-item"
+                  <NavDropdown.Item
+                    eventKey={9 + i}
+                    as={Link}
                     to={`/articles/${topic.slug}/topics`}
                     key={topic.slug}
                   >
                     {topic.slug}
-                  </Link>
+                  </NavDropdown.Item>
                 );
               })}
               <NavDropdown.Divider />
-              <Link className="dropdown-item" to="/topics">
+              <NavDropdown.Item eventKey="9" as={Link} to="/topics">
                 Show all topics
-              </Link>
+              </NavDropdown.Item>
             </NavDropdown>
             {loggedInUser && (
-              <Link className="nav-link" to="/article/form">
+              <Nav.Link eventKey="5" as={Link} to="/article/form">
                 Add Article
-              </Link>
+              </Nav.Link>
             )}
           </Nav>
           <Nav>
             {loggedInUser ? (
-              <Link className="nav-link" to={`/users/${loggedInUser}`}>
+              <Nav.Link eventKey="6" as={Link} to={`/users/${loggedInUser}`}>
                 Logged in as: {loggedInUser}
-              </Link>
+              </Nav.Link>
             ) : (
               <>
-                <Link className="nav-link" to={`/signin`}>
+                <Nav.Link eventKey="7" as={Link} to={`/signin`}>
                   Sign In
-                </Link>
-                <Link className="nav-link" to={`/login`}>
+                </Nav.Link>
+                <Nav.Link eventKey="8" as={Link} to={`/login`}>
                   Log In
-                </Link>
+                </Nav.Link>
               </>
             )}
             {loggedInUser && (

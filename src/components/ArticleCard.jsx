@@ -6,22 +6,19 @@ import { datePrettier } from "../utils/utils";
 import cooking from "../images/cooking.jpg";
 import coding from "../images/coding.jpg";
 import football from "../images/football.jpg";
-import ErrorPage from "../pages/ErrorPage";
 
 class ArticleCard extends Component {
   state = {
     article: {},
-    isLoading: true,
-    err: false
+    isLoading: true
   };
   render() {
-    const { article, isLoading, err } = this.state;
+    const { article, isLoading } = this.state;
     const ref = {
       coding,
       cooking,
       football
     };
-    if (err) return <ErrorPage err={err} />;
     if (isLoading) return <Loading text="Loading the article..." />;
     return (
       <Card style={{ width: "22rem", height: "34rem" }} className="card">

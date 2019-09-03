@@ -50,23 +50,6 @@ body {
   font-weight: bold;
 }
 
-/* === Footer === */
-
-/* footer {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  right: 0;
-} */
-
-/* ====================================================================== */
-
-/* ==================== PAGES ==================== */
-
-/* === HOMEPAGE === */
-
-/* ==================== COMPONENTS ==================== */
-
 /* === Jumbotron === */
 
 .jumbotron {
@@ -213,6 +196,32 @@ body {
   margin: 1rem;
 }
 
+.contactCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav-link {
+  color: white !important;
+}
+
+.cardInfo {
+  margin: 1rem;
+  opacity: 0.87;
+}
+
+.footer-icon {
+  margin: 3% 2%;
+  color: white;
+}
+
+@media (min-width: 576px) {
+  .cardInfo {
+    width: 25rem;
+  }
+}
+
 @media (min-width: 768px) {
   .addArticleForm {
     padding-right: 5rem;
@@ -233,6 +242,9 @@ body {
   .signInForm {
     padding-right: 5rem;
     padding-left: 5rem;
+  }
+  .cardInfo {
+    width: 30rem;
   }
 }
 
@@ -256,5 +268,8 @@ body {
   .signInForm {
     padding-right: 10rem;
     padding-left: 10rem;
+  }
+  .cardInfo {
+    width: 40rem;
   }
 }

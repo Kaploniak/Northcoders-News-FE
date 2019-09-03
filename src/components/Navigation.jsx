@@ -49,7 +49,7 @@ class Navigation extends Component {
                 topics.map((topic, i) => {
                   return (
                     <NavDropdown.Item
-                      eventKey={9 + i}
+                      eventKey={10 + i}
                       as={Link}
                       to={`/articles/${topic.slug}/topics`}
                       key={topic.slug}
@@ -69,6 +69,9 @@ class Navigation extends Component {
                 Add Article
               </Nav.Link>
             )}
+            <Nav.Link eventKey="9" as={Link} to="/contact">
+              Contact
+            </Nav.Link>
           </Nav>
           <Nav>
             {loggedInUser ? (

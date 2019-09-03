@@ -36,7 +36,11 @@ class Info extends Component {
         </Alert>
 
         {!show && (
-          <Button variant="warning" onClick={() => this.setShow(true)}>
+          <Button
+            className="infoButton"
+            variant="warning"
+            onClick={() => this.setShow(true)}
+          >
             Important
           </Button>
         )}

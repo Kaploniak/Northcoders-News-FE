@@ -49,7 +49,7 @@ class Navigation extends Component {
                 topics.map((topic, i) => {
                   return (
                     <NavDropdown.Item
-                      eventKey={10 + i}
+                      eventKey={11 + i}
                       as={Link}
                       to={`/articles/${topic.slug}/topics`}
                       key={topic.slug}
@@ -89,15 +89,21 @@ class Navigation extends Component {
               </>
             )}
             {loggedInUser && (
-              <Button
-                id="logoutBtn"
-                className="nav-link"
-                variant="secondary"
+              <Nav.Link
+                style={{
+                  "font-weight": "700",
+                  padding: "0.68rem",
+                  "font-size": "0.89rem"
+                }}
+                eventKey="11"
+                className="nav-link logoutBtn"
+                variant="secondary-outline"
                 size="sm"
+                as={Button}
                 onClick={this.handleLogOutUser}
               >
                 Log Out
-              </Button>
+              </Nav.Link>
             )}
           </Nav>
         </Navbar.Collapse>

@@ -4,7 +4,7 @@ import * as api from "../api";
 import ReactDOM from "react-dom";
 import { navigate } from "@reach/router";
 
-class SignInPage extends Component {
+class SignUpPage extends Component {
   state = {
     errorMsg: null,
     err: null,
@@ -107,4 +107,4 @@ class SignInPage extends Component {
   };
 }
 
-export default SignInPage;
+export default SignUpPage;

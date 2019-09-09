@@ -65,7 +65,7 @@ class AddArticlePage extends Component {
                 {addTopic && (
                   <>
                     <Form.Group controlId="slug">
-                      <Form.Label>Topic slug</Form.Label>
+                      <Form.Label>Topic name</Form.Label>
                       <Form.Control
                         type="text"
                         placeholder='e.g. "cars"'
@@ -168,7 +168,12 @@ class AddArticlePage extends Component {
         api
           .postNewTopic({ slug, description })
           .then(() => {
-            api.postNewArticle({ title, body, slug, author: loggedInUser });
+            return api.postNewArticle({
+              title,
+              body,
+              slug,
+              author: loggedInUser
+            });
           })
           .then(article => {
             ReactDOM.findDOMNode(this.messageForm).reset();

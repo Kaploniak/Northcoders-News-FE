@@ -80,8 +80,8 @@ class Navigation extends Component {
               </Nav.Link>
             ) : (
               <>
-                <Nav.Link eventKey="7" as={Link} to={`/signin`}>
-                  Sign In
+                <Nav.Link eventKey="7" as={Link} to={`/signup`}>
+                  Sign Up
                 </Nav.Link>
                 <Nav.Link eventKey="8" as={Link} to={`/login`}>
                   Log In

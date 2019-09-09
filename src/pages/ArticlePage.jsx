@@ -8,6 +8,7 @@ import { Link, navigate } from "@reach/router";
 import cooking from "../images/cooking.jpg";
 import coding from "../images/coding.jpg";
 import football from "../images/football.jpg";
+import defaultTopic from "../images/defaultTopic.jpg";
 import Voting from "../components/Voting";
 import ErrorPage from "../pages/ErrorPage";
 
@@ -38,7 +39,10 @@ class ArticlePage extends Component {
           </div>
         )}
         <Link to={`/articles?${article.topic}`}>
-          <img src={ref[article.topic]} alt={`Card: ${article.topic} topic`} />
+          <img
+            src={ref[article.topic] ? ref[article.topic] : defaultTopic}
+            alt={`Card: ${article.topic} topic`}
+          />
         </Link>
         <h2>{article.title}</h2>
         <h4 className="mb-2 text-muted">{dateFormat(article.created_at)}</h4>

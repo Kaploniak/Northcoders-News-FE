@@ -10,7 +10,7 @@ import ArticlePage from "./pages/ArticlePage";
 import AllArticlesPage from "./pages/AllArticlesPage";
 import AllUsersPage from "./pages/AllUsersPage";
 import AddArticlePage from "./pages/AddArticlePage";
-import SignInPage from "./pages/SignInPage";
+import SignUpPage from "./pages/SignUpPage";
 import LogInPage from "./pages/LogInPage";
 import LogOutPage from "./pages/LogOutPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -49,7 +49,7 @@ class App extends React.Component {
           <AllTopicsPage path="/topics" loggedInUser={loggedInUser} />
           <AllUsersPage path="/users" />
           <AddArticlePage path="article/form" loggedInUser={loggedInUser} />
-          <SignInPage path="/signin" />
+          <SignUpPage path="/signup" />
           <LogInPage path="/login" setLoggedInUser={this.setLoggedInUser} />
           <LogOutPage path="/logout" setLoggedInUser={this.setLoggedInUser} />
           <ProfilePage path="/users/:loggedInUser" />
